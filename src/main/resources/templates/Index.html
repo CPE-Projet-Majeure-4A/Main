@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../../../../ProjetMajeur/Map%20avec%20Leaflet/Style.css" />
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([33.799602, 2.864200], 15);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var Sport = L.layerGroup().addTo(map);
+        var Pizzeria = L.layerGroup().addTo(map);
+        var SportIcon = L.icon({
+            iconUrl: 'FIT.png',
+            iconSize: [100, 100]
+        });
+        L.marker([33.799602, 2.864200], {
+            icon: SportIcon
+        }).addTo(Sport).bindPopup("<h3>Meriem Club</h3></br>Sale de sport pour Femme</br>Du Samedi au Jeudi</br>Tel 029999999");
+        L.marker([33.802579, 2.867955], {
+            icon: SportIcon
+        }).addTo(Sport).bindPopup("<h3>FormeInshape</h3></br>Sale pour Homme et Femme</br>7/7jour</br>Tel 029000000");
+        L.marker([33.800778, 2.860724], {
+            icon: SportIcon
+        }).addTo(Sport).bindPopup("<h3>SportPro</h3></br>Sale pour tout le monde</br>Du Dimanche au Jeudi</br>Tel 029111111");
+        var PizzaIcon = L.icon({
+            iconUrl: 'PIZ.png',
+            iconSize: [60, 60]
+        });
+        L.marker([33.804755, 2.863398], {
+            icon: PizzaIcon
+        }).addTo(Pizzeria).bindPopup("<h3>Hamou's Pizza</h3></br>De 11h a 21h</br>Sur place/Livraison</br>Tel 029777777");
+        L.marker([33.797801, 2.868462], {
+            icon: PizzaIcon
+        }).addTo(Pizzeria).bindPopup("<h3>Pizza Family</h3></br>De 10h a 22h</br>7/7jour</br>Tel 029888888");
+    </script>
+    <form>
+        <fieldset>
+            <legend>Couches</legend>
+            <div>
+                <input type="checkbox" id="pizzeria" name="interest" value="pizzeria" checked>
+                <label for="pizzeria">Pizzerias</label>
+            </div>
+            <div>
+                <input type="checkbox" id="sport" name="interest" value="sport" checked>
+                <label for="sport">Salles de Sport</label>
+            </div>
+        </fieldset>
+    </form>
+    <script>
+        var sportCheckbox = document.querySelector('input[value="sport"]');
+
+        sportCheckbox.onchange = function() {
+            if (sportCheckbox.checked) {
+                map.addLayer(Sport);
+
+            } else {
+                map.removeLayer(Sport);
+
+            }
+        };
+
+        var pizzeriaCheckbox = document.querySelector('input[value="pizzeria"]');
+
+        pizzeriaCheckbox.onchange = function() {
+            if (pizzeriaCheckbox.checked) {
+                map.addLayer(Pizzeria);
+
+            } else {
+                map.removeLayer(Pizzeria);
+
+            }
+        };
+    </script>
+    <p id="xy">0,0
+        <p>
+            <script>
+                function onMouseMove(e) {
+                    document.getElementById("xy").innerHTML = e.latlng;
+                }
+
+                map.on('mousemove', onMouseMove);
+            </script>
+
+            <form>
+                <div>
+                    <input type="search" id="maRecherche" name="q">
+                </div>
+            </form>
+            <button onmouseup="myFunction()">Rechercher</button>
+            <script>
+                function myFunction() {
+                    var t = [
+                        [33.799602, 2.864200, "Meriem Club"],
+                        [33.802579, 2.867955, "FormeInshape"],
+                        [33.800778, 2.860724, "SportPro"],
+                        [33.804755, 2.863398, "Hamou's Pizza"],
+                        [33.797801, 2.868462, "Pizza Family"]
+                    ];
+                    var x = document.getElementById("maRecherche").value;
+                    var trouvee = 0;
+                    for (var i = 0; i < t.length; i++) {
+                        if (t[i][2] == x) {
+                            map.setView([t[i][0], t[i][1]], 17);
+                            trouvee = 1;
+                        }
+                    }
+                    if (trouvee == 0) {
+                        alert("Untrouvable");
+                    }
+                }
+            </script>
+
+</body>
+
+</html>
