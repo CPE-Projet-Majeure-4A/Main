@@ -6,5 +6,176 @@ body {
 }
 
 #mapid {
-    height: 500px;
+    height: 100vh;
+    width: 70%;
+    float: left;
 }
+
+#ajouts_vehicules {
+    height: 100vh;
+    width: 30%;
+    float: left;
+    overflow-y: auto;
+    
+}
+
+h1,
+h2 {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+h2 {
+    margin: 0 0 0 8px;
+}
+
+
+
+.left-part,
+form {
+    padding: 25px;
+}
+
+.left-part {
+    text-align: center;
+}
+
+.fa-graduation-cap {
+    font-size: 72px;
+}
+
+form {
+    background: rgba(85, 84, 84, 0.918);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+select {
+    padding: 5px;
+    margin-bottom: 30px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #eee;
+}
+
+input::placeholder {
+    color: #eee;
+}
+
+option:focus {
+    border: none;
+}
+
+option {
+    background: black;
+    border: none;
+}
+
+.checkbox input {
+    margin: 0 10px 0 0;
+    vertical-align: middle;
+}
+
+.checkbox a {
+    color: #26a9e0;
+}
+
+.checkbox a:hover {
+    color: #85d6de;
+}
+
+.btn-item,
+button {
+    padding: 10px 5px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: none;
+    background: #26a9e0;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.btn-item {
+    display: inline-block;
+    margin: 20px 5px 0;
+}
+
+button {
+    width: 100%;
+}
+
+button:hover,
+.btn-item:hover {
+    background: #85d6de;
+}
+
+@media (min-width: 568px) {
+    html,
+    body {
+        height: 100%;
+    }
+    .main-block {
+        flex-direction: row;
+        height: calc(100% - 50px);
+    }
+    .left-part,
+    form {
+        flex: 1;
+        height: auto;
+    }
+}
+
+
+
+
+
+
+
+
+/*Legend specific*/
+.legend {
+    padding: 6px 8px;
+    font: 14px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+    /*border-radius: 5px;*/
+    line-height: 50px;
+    color: #555;
+  }
+  .legend h4 {
+    text-align: center;
+    font-size: 16px;
+    margin: 2px 12px 8px;
+    color: #777;
+  }
+  
+  .legend span {
+    position: relative;
+    bottom: 3px;
+  }
+  
+  .legend i {
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin: 0 8px 0 0;
+    opacity: 0.7;
+  }
+  
+  .legend i.icon {
+    background-size: 50px;
+    background-color: rgba(255, 255, 255, 1);
+  }
