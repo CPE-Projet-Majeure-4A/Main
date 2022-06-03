@@ -12,17 +12,7 @@ public class VehicleObject {
     private int[] peopleIdSet;
     private int[] vehicleIdSet;
 
-    public VehicleObject(int id, int intensity, float lat, float lon, String type, int maxVehicleSpace, int peopleCapacity, String teamUuid, int[] peopleIdSet, int[] vehicleIdSet) {
-        this.id = id;
-        this.intensity = intensity;
-        this.lat = lat;
-        this.lon = lon;
-        this.type = type;
-        this.maxVehicleSpace = maxVehicleSpace;
-        this.peopleCapacity = peopleCapacity;
-        this.teamUuid = teamUuid;
-        this.peopleIdSet = peopleIdSet;
-        this.vehicleIdSet = vehicleIdSet;
+    public VehicleObject(){
     }
 
     public int getId() {

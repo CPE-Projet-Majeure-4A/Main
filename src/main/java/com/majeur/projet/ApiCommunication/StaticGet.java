@@ -34,7 +34,7 @@ public class StaticGet {
     public static VehicleObject[] getVehicles()
     {
         //TODO Adapter API pour ne pas avoir besoin de l'uuid
-        final String url = "http://vps.cpe-sn.fr:8081/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1";
+        final String url = "http://vps.cpe-sn.fr:8081/vehicle";
 
         RestTemplate restTemplate = new RestTemplate();
         VehicleObject[] result = restTemplate.getForObject(url, VehicleObject[].class);

@@ -57,7 +57,7 @@ initMap();
 // ------------------------------------------------------Recu-peration des feux pour l'affichage 
 function generate_feu() {
 
-    const URL = "http://vps.cpe-sn.fr:8081/fire";
+    const URL = "http://localhost:8080/fire";
     let context = {
         method: 'GET'
     };
@@ -84,7 +84,7 @@ function callback(response) {
 // ------------------------------------------------------Recu-peration des caserne pour l'affichage 
 function generate_caserne() {
 
-    const URL = "localhost:8080/facility";
+    const URL = "http://localhost:8080/facility";
     let context = {
         method: 'GET'
     };
@@ -193,7 +193,7 @@ async function send()
 
 
 
-    const rawResponse = await fetch("localhost:8080/vehicle", {
+    const rawResponse = await fetch("http://localhost:8080/vehicle", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -214,7 +214,7 @@ async function send()
 
 function generate_vehicle() {
 
-    const GET_CHUCK_URL="localhost:8080/vehicle";
+    const GET_CHUCK_URL="http://localhost:8080/vehicle";
     let context =   {
                         method: 'GET'
                     };

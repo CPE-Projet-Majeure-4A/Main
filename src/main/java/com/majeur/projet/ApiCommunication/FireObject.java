@@ -7,13 +7,7 @@ public class FireObject {
     private float lon;
     private String type;
 
-    public FireObject(int id, int intensity, float lat, float lon, String type, int range) {
-        this.id = id;
-        this.intensity = intensity;
-        this.lat = lat;
-        this.lon = lon;
-        this.type = type;
-        this.range = range;
+    public FireObject(){
     }
 
     public int getId() {

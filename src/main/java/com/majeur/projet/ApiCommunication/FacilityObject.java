@@ -1,17 +1,7 @@
 package com.majeur.projet.ApiCommunication;
 
 public class FacilityObject {
-    /**
-     *     "crewMember": 0,
-     *     "facilityRefID": 0,
-     *     "fuel": 0,
-     *     "id": 0,
-     *     "lat": 0,
-     *     "liquidQuantity": 0,
-     *     "liquidType": "ALL",
-     *     "lon": 0,
-     *     "type": "CAR"
-     */
+
     private int crewMember;
     private int facilityRefID;
     private float fuel;
@@ -22,16 +12,7 @@ public class FacilityObject {
     private String liquidType;
     private String type;
 
-    public FacilityObject(int crewMember, int facilityRefID, float fuel, int id, float lat, float lon, float liquidQuantity, String liquidType, String type) {
-        this.crewMember = crewMember;
-        this.facilityRefID = facilityRefID;
-        this.fuel = fuel;
-        this.id = id;
-        this.lat = lat;
-        this.lon = lon;
-        this.liquidQuantity = liquidQuantity;
-        this.liquidType = liquidType;
-        this.type = type;
+    public FacilityObject(){
     }
 
     public int getCrewMember() {
