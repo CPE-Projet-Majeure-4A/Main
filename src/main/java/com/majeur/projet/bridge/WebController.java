@@ -1,4 +1,4 @@
-package com.majeur.projet.Bridge;
+package com.majeur.projet.bridge;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

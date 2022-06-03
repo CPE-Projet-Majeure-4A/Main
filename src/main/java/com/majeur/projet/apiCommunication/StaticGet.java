@@ -1,4 +1,4 @@
-package com.majeur.projet.ApiCommunication;
+package com.majeur.projet.apiCommunication;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +16,16 @@ public class StaticGet {
 
         RestTemplate restTemplate = new RestTemplate();
         FireObject[] result = restTemplate.getForObject(url, FireObject[].class);
+
+        return result;
+    }
+
+    public static FireObject getFire(String id)
+    {
+        final String url = "http://vps.cpe-sn.fr:8081/fire/"+id;
+
+        RestTemplate restTemplate = new RestTemplate();
+        FireObject result = restTemplate.getForObject(url, FireObject.class);
 
         return result;
     }

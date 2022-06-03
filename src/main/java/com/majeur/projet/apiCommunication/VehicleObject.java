@@ -1,4 +1,4 @@
-package com.majeur.projet.ApiCommunication;
+package com.majeur.projet.apiCommunication;
 
 public class VehicleObject {
     private int id;

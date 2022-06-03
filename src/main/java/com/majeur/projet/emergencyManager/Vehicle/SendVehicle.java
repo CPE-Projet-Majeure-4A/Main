@@ -1,4 +1,4 @@
-package com.majeur.projet.EmergencyManager.Vehicle;
+package com.majeur.projet.emergencyManager.Vehicle;
 
 /**
  * Sends the vehicle to destination

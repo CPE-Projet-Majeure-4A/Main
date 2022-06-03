@@ -1,4 +1,4 @@
-package com.majeur.projet.EmergencyManager.Fire;
+package com.majeur.projet.emergencyManager.Fire;
 
 /**
  * Get Fire data from ManageFireDisplay

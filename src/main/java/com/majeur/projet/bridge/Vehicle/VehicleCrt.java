@@ -1,9 +1,8 @@
-package com.majeur.projet.Bridge.Vehicle;
+package com.majeur.projet.bridge.Vehicle;
 
-import com.majeur.projet.ApiCommunication.FireObject;
-import com.majeur.projet.ApiCommunication.StaticGet;
-import com.majeur.projet.ApiCommunication.StaticVehicle;
-import com.majeur.projet.ApiCommunication.VehicleObject;
+import com.majeur.projet.apiCommunication.StaticGet;
+import com.majeur.projet.apiCommunication.StaticVehicle;
+import com.majeur.projet.apiCommunication.VehicleObject;
 import org.springframework.web.bind.annotation.*;
 
 /**

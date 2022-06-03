@@ -1,4 +1,4 @@
-package com.majeur.projet.ApiCommunication;
+package com.majeur.projet.apiCommunication;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.HttpClientErrorException;
