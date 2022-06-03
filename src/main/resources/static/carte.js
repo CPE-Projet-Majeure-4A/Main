@@ -1,6 +1,6 @@
 //---------------------------------INITIALISATION DE LA MAP -----------------------------------------------------------------
 
-var id_groupe=214;
+var id_groupe=845;
 
 
 const mapboxToken = "pk.eyJ1IjoiYXJ0aHVyb2xpdmllciIsImEiOiJjbDN2YTYxZW0wMzdiM21wOGE3eGxyZjNkIn0.TEuLBTV8qSpy8i9zveoxGg";
@@ -193,7 +193,7 @@ async function send()
 
 
 
-    const rawResponse = await fetch("http://localhost:8080/vehicle", {
+    const rawResponse = await fetch("http://localhost:8080/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
