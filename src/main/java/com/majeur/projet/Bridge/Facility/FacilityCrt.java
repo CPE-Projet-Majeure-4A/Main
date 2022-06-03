@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FacilityCrt {
 
     @RequestMapping(method = RequestMethod.GET, value = "/facility")
-    public FacilityObject[] fires() {
+    public FacilityObject[] facilities() {
         return StaticGet.getFacilities();
     }
 }

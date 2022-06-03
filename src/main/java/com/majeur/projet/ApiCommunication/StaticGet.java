@@ -1,6 +1,5 @@
 package com.majeur.projet.ApiCommunication;
 
-import com.majeur.projet.ApiCommunication.FireObject;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -33,7 +32,6 @@ public class StaticGet {
 
     public static VehicleObject[] getVehicles()
     {
-        //TODO Adapter API pour ne pas avoir besoin de l'uuid
         final String url = "http://vps.cpe-sn.fr:8081/vehicle";
 
         RestTemplate restTemplate = new RestTemplate();
