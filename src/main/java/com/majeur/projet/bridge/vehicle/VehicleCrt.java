@@ -3,6 +3,7 @@ package com.majeur.projet.bridge.vehicle;
 import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.StaticVehicle;
 import com.majeur.projet.apiCommunication.VehicleObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,8 +21,8 @@ public class VehicleCrt {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/vehicle/{teamUuid}/{id}")
-    public boolean vehicleCrtPut(@PathVariable String id, @PathVariable String teamUuid, @RequestBody Object body) {
-        return StaticVehicle.updateVehicle(id, body, teamUuid);
+    public void vehicleCrtPut(@PathVariable String id, @PathVariable String teamUuid, @RequestBody VehicleObject body) {
+        StaticVehicle.updateVehicle(id, body, teamUuid);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/vehicle/{teamUuid}/{id}")

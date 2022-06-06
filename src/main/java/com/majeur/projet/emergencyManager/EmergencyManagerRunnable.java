@@ -56,7 +56,9 @@ public class EmergencyManagerRunnable implements Runnable {
                             }
 
                         }
+                        h.setMissions(missions);
                     }
+
 
                 }
                 System.out.println("Thread affect loop");

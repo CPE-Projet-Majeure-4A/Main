@@ -78,10 +78,13 @@ public class MoveRunnable implements Runnable{
                             vehicle.setLon(lon);
                             StaticVehicle.addVehicle(vehicle);
                         }
+                        h.setMissions(missions);
                     }
+
                 }
 
                 System.out.println("Thread move loop");
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

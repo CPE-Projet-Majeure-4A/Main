@@ -1,8 +1,6 @@
 package com.majeur.projet.threading;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -11,6 +9,7 @@ public class ThreadEntity {
     @GeneratedValue
     private Integer id;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<MissionEntity> missions;
 
     private String name;

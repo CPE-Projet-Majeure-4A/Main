@@ -12,6 +12,9 @@ public class MissionEntity {
     private int destinationId;
     private VehicleState vehicleState;
 
+    @ManyToOne
+    private ThreadEntity threadEntity;
+
     public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState) {
         this.vehicleId = vehicleId;
         this.destinationId = destinationId;
@@ -53,5 +56,21 @@ public class MissionEntity {
                 ", destinationId=" + destinationId +
                 ", vehicleState=" + vehicleState +
                 '}';
+    }
+
+    public ThreadEntity getThreadEntity() {
+        return threadEntity;
+    }
+
+    public void setThreadEntity(ThreadEntity threadEntity) {
+        this.threadEntity = threadEntity;
+    }
+
+    public int getMissionId() {
+        return missionId;
+    }
+
+    public void setMissionId(int missionId) {
+        this.missionId = missionId;
     }
 }

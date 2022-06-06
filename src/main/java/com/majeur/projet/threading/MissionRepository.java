@@ -1,4 +1,6 @@
 package com.majeur.projet.threading;
 
-public class MissionRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface MissionRepository extends CrudRepository<MissionEntity, Integer> {
 }
