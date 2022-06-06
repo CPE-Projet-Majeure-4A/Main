@@ -11,7 +11,7 @@ public class VehicleObject {
     private float fuel;
     private String type;
 
-    public VehicleObject(){
+    public VehicleObject() {
     }
 
     public int getId() {
@@ -26,7 +26,7 @@ public class VehicleObject {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
@@ -34,7 +34,7 @@ public class VehicleObject {
         return lon;
     }
 
-    public void setLon(float lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 
@@ -46,43 +46,43 @@ public class VehicleObject {
         this.liquidType = liquidType;
     }
 
-	public float getLiquidQuantity() {
-		return liquidQuantity;
-	}
+    public float getLiquidQuantity() {
+        return liquidQuantity;
+    }
 
-	public void setLiquidQuantity(float liquidQuantity) {
-		this.liquidQuantity = liquidQuantity;
-	}
+    public void setLiquidQuantity(float liquidQuantity) {
+        this.liquidQuantity = liquidQuantity;
+    }
 
-	public int getCrewMember() {
-		return crewMember;
-	}
+    public int getCrewMember() {
+        return crewMember;
+    }
 
-	public void setCrewMember(int crewMember) {
-		this.crewMember = crewMember;
-	}
+    public void setCrewMember(int crewMember) {
+        this.crewMember = crewMember;
+    }
 
-	public int getFacilityRefId() {
-		return facilityRefId;
-	}
+    public int getFacilityRefId() {
+        return facilityRefId;
+    }
 
-	public void setFacilityRefId(int facilityRefId) {
-		this.facilityRefId = facilityRefId;
-	}
+    public void setFacilityRefId(int facilityRefId) {
+        this.facilityRefId = facilityRefId;
+    }
 
-	public float getFuel() {
-		return fuel;
-	}
+    public float getFuel() {
+        return fuel;
+    }
 
-	public void setFuel(float fuel) {
-		this.fuel = fuel;
-	}
+    public void setFuel(float fuel) {
+        this.fuel = fuel;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 }

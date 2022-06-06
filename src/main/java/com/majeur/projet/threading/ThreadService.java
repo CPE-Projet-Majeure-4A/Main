@@ -1,8 +1,12 @@
 package com.majeur.projet.threading;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import com.majeur.projet.apiCommunication.StaticGet;
+import com.majeur.projet.apiCommunication.VehicleObject;
 import com.majeur.projet.emergencyManager.EmergencyManagerRunnable;
 import com.majeur.projet.movement.MoveRunnable;
 import org.springframework.context.annotation.Bean;
@@ -62,8 +66,18 @@ public class ThreadService {
     //@Bean(initMethod = "init")
     public void init() {
         ArrayList<MissionObject> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
-        ThreadEntity h1=new ThreadEntity(1, "default");
+        String name = "default";
+        List<VehicleObject> vehicles = Arrays.asList(StaticGet.getVehicles());
+        int facilityId = StaticGet.getTeamFacility().getId();
+        for(VehicleObject vehicle : vehicles){
+            if(vehicle.getFacilityRefId() == facilityId){
+                missions.add(new MissionObject(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY));
+            }
+        }
+        ThreadEntity h1 =new ThreadEntity(1, missions, name);
+        h1.setMissions(missions);
         threadRepository.save(h1);
+        System.out.println("Thread initalized");
     }
 
 }

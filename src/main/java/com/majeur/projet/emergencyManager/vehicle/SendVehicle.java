@@ -4,9 +4,12 @@ package com.majeur.projet.emergencyManager.vehicle;
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
 import com.majeur.projet.apiCommunication.VehicleObject;
+import com.majeur.projet.threading.MissionObject;
+import com.majeur.projet.threading.VehicleState;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Sends the vehicle to destination
@@ -44,16 +47,17 @@ public class SendVehicle {
 	 * check distance and if distance greater than 50 delete fire from list
 	 * return listFire
 	 */
-	public static ArrayList<FireObject> GetFireInArea(ArrayList<FireObject> listFire, FacilityObject F) {
+	public static List<FireObject> GetFireInArea(List<FireObject> listFire, FacilityObject F) {
 		Iterator<FireObject> iteratorFires = listFire.iterator();
+		List<FireObject> firesInArea = new ArrayList<>();
 		while (iteratorFires.hasNext()) {
 			FireObject currentFire = iteratorFires.next();
 			double Distance = calculDistance(currentFire.getLat(), F.getLat(), currentFire.getLon(), F.getLon());
 			if (Distance < 50) {
-				iteratorFires.remove();
+				firesInArea.add(currentFire);
 			}
 		}
-		return listFire;
+		return firesInArea;
 	}
 		
 	/*
@@ -63,13 +67,17 @@ public class SendVehicle {
 	* launches sendVehicleToFire(vehicleId, fireId) or sendVehicleToFacility(vehicleId)
 	* return void
 	*/
-	public static void SelectVehicle(ArrayList<FireObject> listFire, VehicleObject V) {
+	public static MissionObject SelectVehicle(List<FireObject> listFire, int vehicleId, int facilityId, VehicleObject V) {
 		int fireId = WeightFunction(listFire, V);
+		MissionObject mission = new MissionObject(vehicleId, 0, null);
 		if (fireId == -1) {
-			// sendVehicleToFacility(V.getId());
+			mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
+			mission.setDestinationId(facilityId);
 		} else {
-			// sendVehicleToFire(V.getId(), fireId);
+			mission.setVehicleState(VehicleState.GOING_TO_FIRE);
+			mission.setDestinationId(fireId);
 		}
+		return mission;
 	}
 
 		
@@ -82,7 +90,7 @@ public class SendVehicle {
 	* return fireId (from the fire with highest weight)
 	*/
 	// if fireId = -1 alors on a pas de feu pris en charge par le véhicule
-	public static int WeightFunction(ArrayList<FireObject> listFire, VehicleObject V) {
+	public static int WeightFunction(List<FireObject> listFire, VehicleObject V) {
 		Iterator<FireObject> iteratorFires = listFire.iterator();
 		int fireId = -1;
 		while (iteratorFires.hasNext()) {
@@ -100,7 +108,7 @@ public class SendVehicle {
 			Weight += 100; // On utilise ALL pour l'instant donc 1.0f en efficacité
 			
 			float firePower = currentFire.getIntensity();
-			float vehiclePower = V.getLiquidQuantity() * 1f; // ALL = 1 efficacité
+			float vehiclePower = V.getLiquidQuantity(); // ALL = 1 efficacité
 			if (firePower > vehiclePower) {
 				Weight -= (firePower - vehiclePower) * 10;
 				if (Weight < 0) {

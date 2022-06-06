@@ -1,6 +1,10 @@
 package com.majeur.projet.apiCommunication;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,14 +41,25 @@ public class StaticVehicle {
         return true;
     }
 
-    public static VehicleObject addVehicle(Object request, String teamUuid){
+    public static VehicleObject addVehicle(VehicleObject vehicle){
         RestTemplate restTemplate = new RestTemplate();
-        VehicleObject vehicle = null;
-        try{
-            vehicle = restTemplate.postForObject(url+teamUuid, request, VehicleObject.class);
-        }catch(HttpClientErrorException e){
-            e.printStackTrace();
-        }
-        return vehicle;
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("crewMember", vehicle.getCrewMember());
+        jsonObject.put("facilityRefID", vehicle.getFacilityRefId());
+        jsonObject.put("fuel", vehicle.getFuel());
+        jsonObject.put("id", vehicle.getId());
+        jsonObject.put("lat", vehicle.getLat());
+        jsonObject.put("liquidQuantity", vehicle.getLiquidQuantity());
+        jsonObject.put("liquidType", vehicle.getLiquidType());
+        jsonObject.put("lon", vehicle.getLon());
+        jsonObject.put("CAR", vehicle.getType());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request =
+                new HttpEntity<>(jsonObject.toString(), headers);
+        return restTemplate.postForObject(url+teamUuid, request, VehicleObject.class);
     }
 }
