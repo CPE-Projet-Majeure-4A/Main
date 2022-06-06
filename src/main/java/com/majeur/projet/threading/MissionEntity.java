@@ -12,6 +12,8 @@ public class MissionEntity {
     private int destinationId;
     private VehicleState vehicleState;
 
+    private double step;
+
     @ManyToOne
     private ThreadEntity threadEntity;
 
@@ -72,5 +74,13 @@ public class MissionEntity {
 
     public void setMissionId(int missionId) {
         this.missionId = missionId;
+    }
+
+    public double getStep() {
+        return step;
+    }
+
+    public void setStep(double step) {
+        this.step = step;
     }
 }
