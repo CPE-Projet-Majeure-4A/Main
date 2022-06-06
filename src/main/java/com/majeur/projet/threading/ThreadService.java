@@ -31,7 +31,7 @@ public class ThreadService {
         this.moveRunnable =new MoveRunnable(this.threadRepository);
 
         // A Runnable is held by a Thread which manage lifecycle of the Runnable
-        emergencyManagerThread =new Thread(emergencyManagerRunnable);
+        emergencyManagerThread = new Thread(emergencyManagerRunnable);
         moveThread = new Thread(moveRunnable);
         // The Thread is started and the method run() of the associated DisplayRunnable is launch
         emergencyManagerThread.start();
@@ -65,18 +65,18 @@ public class ThreadService {
     @Bean()
     //@Bean(initMethod = "init")
     public void init() {
-        ArrayList<MissionEntity> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
+        ArrayList<MissionEntity> missions = new ArrayList<>(); //Utiliser avec mot clef synchronized
         String name = "default";
         List<VehicleObject> vehicles = Arrays.asList(StaticGet.getVehicles());
         int facilityId = StaticGet.getTeamFacility().getId();
         for(VehicleObject vehicle : vehicles){
             if(vehicle.getFacilityRefID() == facilityId){
                 System.out.println("ajouté");
+                //Initialisation des missions
                 missions.add(new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY));
             }
         }
         ThreadEntity h1 = new ThreadEntity(1, missions, name);
-        //System.out.println(h1.getMissions().toString());
         threadRepository.save(h1);
         System.out.println("Thread initalized");
     }

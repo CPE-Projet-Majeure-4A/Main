@@ -27,15 +27,6 @@ public class MoveRunnable implements Runnable{
                 Thread.sleep(5000);
 
                 for (ThreadEntity h : this.hrepo.findAll()) {
-                    System.out.println(h.getId());
-                    // TODO fix problème plusieurs thread entity ??
-                    if(h.getMissions() == null){
-                        System.out.println("Mauvais thread");
-                        continue;
-                    }else{
-                        System.out.println("bon thread");
-                    }
-                    System.out.println(h);
                     List<MissionEntity> missions = h.getMissions();;
                     FacilityObject facility = StaticGet.getTeamFacility();
                     List<FireObject> fires = Arrays.asList(StaticGet.getFires());
@@ -46,6 +37,8 @@ public class MoveRunnable implements Runnable{
                             double lat;
                             double lon;
                             VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+
+                            // On vérifie si le feu existe toujours
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
                                 //TODO Faire sans spammer l'api
@@ -59,11 +52,12 @@ public class MoveRunnable implements Runnable{
                                 }
 
                             }
+
                             if(mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
 
                                 lat = facility.getLat();
                                 lon = facility.getLon();
-                                mission.setVehicleState(VehicleState.AT_FIRE);
+                                mission.setVehicleState(VehicleState.AT_FACILITY);
 
                             } else if (mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)) {
                                 //TODO Faire propre sans spammer l'api

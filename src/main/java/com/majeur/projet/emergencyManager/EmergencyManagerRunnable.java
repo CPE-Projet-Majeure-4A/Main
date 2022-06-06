@@ -29,14 +29,6 @@ public class EmergencyManagerRunnable implements Runnable {
                 Thread.sleep(10000);
 
                 for (ThreadEntity h : this.hrepo.findAll()) {
-                    // TODO fix problème plusieurs thread entity ??
-                    if(h.getMissions() == null){
-                        System.out.println("Mauvais thread");
-                        continue;
-                    }else{
-                        System.out.println("bon thread");
-                    }
-                    System.out.println(h);
                     List<MissionEntity> missions = h.getMissions();
                     FacilityObject facility = StaticGet.getTeamFacility();
                     List<FireObject> fires = Arrays.asList(StaticGet.getFires());
