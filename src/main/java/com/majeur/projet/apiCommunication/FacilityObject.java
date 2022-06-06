@@ -1,90 +1,58 @@
 package com.majeur.projet.apiCommunication;
 
 public class FacilityObject {
-
-    private int crewMember;
-    private int facilityRefID;
-    private float fuel;
     private int id;
-    private float lat;
-    private float lon;
-    private float liquidQuantity;
-    private String liquidType;
-    private String type;
+    private double lat;
+    private double lon;
+    private int maxVehicleSpace;
+    private int peopleCapacity;
+    private String teamUuid;
+    private int[] peopleIdSet;
+    private int[] vehicleIdSet;
 
     public FacilityObject(){
+    	
     }
-
-    public int getCrewMember() {
-        return crewMember;
-    }
-
-    public void setCrewMember(int crewMember) {
-        this.crewMember = crewMember;
-    }
-
-    public int getFacilityRefID() {
-        return facilityRefID;
-    }
-
-    public void setFacilityRefID(int facilityRefID) {
-        this.facilityRefID = facilityRefID;
-    }
-
-    public float getFuel() {
-        return fuel;
-    }
-
-    public void setFuel(float fuel) {
-        this.fuel = fuel;
-    }
-
     public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getLat() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public double getLat() {
         return lat;
     }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
-
-    public void setLon(float lon) {
-        this.lon = lon;
+    public int getMaxVehicleSpace() {
+        return maxVehicleSpace;
     }
-
-    public float getLiquidQuantity() {
-        return liquidQuantity;
+    public void setMaxVehicleSpace(int maxVehicleSpace) {
+        this.maxVehicleSpace = maxVehicleSpace;
     }
-
-    public void setLiquidQuantity(float liquidQuantity) {
-        this.liquidQuantity = liquidQuantity;
+    public int getPeopleCapacity() {
+        return peopleCapacity;
     }
-
-    public String getLiquidType() {
-        return liquidType;
+    public void setPeopleCapacity(int peopleCapacity) {
+        this.peopleCapacity = peopleCapacity;
     }
-
-    public void setLiquidType(String liquidType) {
-        this.liquidType = liquidType;
+    public String getTeamUuid() {
+        return teamUuid;
     }
-
-    public String getType() {
-        return type;
+    public void setTeamUuid(String teamUuid) {
+        this.teamUuid = teamUuid;
     }
-
-    public void setType(String type) {
-        this.type = type;
+    public int[] getPeopleIdSet() {
+        return peopleIdSet;
     }
-
+    public void setPeopleIdSet(int[] peopleIdSet) {
+        this.peopleIdSet = peopleIdSet;
+    }
+    public int[] getVehicleIdSet() {
+        return vehicleIdSet;
+    }
+    public void setVehicleIdSet(int[] vehicleIdSet) {
+        this.vehicleIdSet = vehicleIdSet;
+    }
 }

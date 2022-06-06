@@ -100,9 +100,9 @@ public class SendVehicle {
 			Weight += 100; // On utilise ALL pour l'instant donc 1.0f en efficacité
 			
 			float firePower = currentFire.getIntensity();
-			float vehiclePower = V.getLiquidQuantity() * 0.1f; // ALL = 1 efficacité
+			float vehiclePower = V.getLiquidQuantity() * 1f; // ALL = 1 efficacité
 			if (firePower > vehiclePower) {
-				Weight -= 500;
+				Weight -= (firePower - vehiclePower) * 10;
 				if (Weight < 0) {
 					Weight = 0;
 				}
