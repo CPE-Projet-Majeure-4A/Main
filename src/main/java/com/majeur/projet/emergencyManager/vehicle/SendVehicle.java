@@ -1,4 +1,4 @@
-package com.majeur.projet.emergencyManager.Vehicle;
+package com.majeur.projet.emergencyManager.vehicle;
 
 
 import com.majeur.projet.ApiCommunication.FireObject;
@@ -8,8 +8,6 @@ import com.majeur.projet.ApiCommunication.StaticGet;
 
 import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.List;
-import java.math.*;
 
 /**
  * Sends the vehicle to destination

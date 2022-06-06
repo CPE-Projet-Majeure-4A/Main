@@ -14,7 +14,7 @@ public class ThreadEntity {
     public ThreadEntity() {
     }
 
-    public ThreadEntity(int id, String name, int superPowerValue) {
+    public ThreadEntity(int id, String name) {
         super();
         this.id=id;
         this.name = name;
@@ -39,6 +39,6 @@ public class ThreadEntity {
 
     @Override
     public String toString() {
-        return "HERO ["+this.id+"]: name:"+this.name;
+        return "THREAD ["+this.id+"]: name:"+this.name;
     }
 }

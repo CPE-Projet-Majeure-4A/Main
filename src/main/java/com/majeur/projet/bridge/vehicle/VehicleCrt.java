@@ -1,4 +1,4 @@
-package com.majeur.projet.bridge.Vehicle;
+package com.majeur.projet.bridge.vehicle;
 
 import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.StaticVehicle;

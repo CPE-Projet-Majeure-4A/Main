@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 public class ThreadService {
 
 
-    private ThreadRepository threadRepository;
+    private final ThreadRepository threadRepository;
     EmergencyManagerRunnable emergencyManagerRunnable;
     MoveRunnable moveRunnable;
-    private Thread emergencyManagerThread;
-    private Thread moveRunnableThread;
+    private final Thread emergencyManagerThread;
+    private final Thread moveThread;
 
     public ThreadService(ThreadRepository threadRepository) {
         //Replace the @Autowire annotation....
@@ -28,10 +28,10 @@ public class ThreadService {
 
         // A Runnable is held by a Thread which manage lifecycle of the Runnable
         emergencyManagerThread =new Thread(emergencyManagerRunnable);
-        moveRunnableThread = new Thread(moveRunnable);
+        moveThread = new Thread(moveRunnable);
         // The Thread is started and the method run() of the associated DisplayRunnable is launch
         emergencyManagerThread.start();
-
+        moveThread.start();
     }
 
 
@@ -42,19 +42,17 @@ public class ThreadService {
 
     public ThreadEntity getThread(int id) {
         Optional<ThreadEntity> hOpt = threadRepository.findById(id);
-        if (hOpt.isPresent()) {
-            return hOpt.get();
-        }else {
-            return null;
-        }
+        return hOpt.orElse(null);
     }
 
     public void stopThread() {
         //Call the user defined stop method of the runnable
         this.emergencyManagerRunnable.stop();
+        this.moveRunnable.stop();
         try {
             //force the thread to stop
             this.emergencyManagerThread.join(100);
+            this.moveThread.join(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,11 +60,9 @@ public class ThreadService {
 
     @Bean(initMethod="init")
     public void init() {
-        ArrayList<MissionObject> missions = new ArrayList<MissionObject>(); //TODO Utiliser avec mot clef synchronized
-        ThreadEntity h1=new ThreadEntity(5, "name", 55);
-        ThreadEntity h2=new ThreadEntity(5, "name1", 55);
+        ArrayList<MissionObject> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
+        ThreadEntity h1=new ThreadEntity(1, "default");
         threadRepository.save(h1);
-        threadRepository.save(h2);
     }
 
 }

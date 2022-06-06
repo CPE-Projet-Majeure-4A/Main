@@ -1,4 +1,4 @@
-package com.majeur.projet.bridge.Facility;
+package com.majeur.projet.bridge.facility;
 
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.StaticGet;

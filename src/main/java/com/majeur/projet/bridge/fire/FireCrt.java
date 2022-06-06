@@ -1,4 +1,4 @@
-package com.majeur.projet.bridge.Fire;
+package com.majeur.projet.bridge.fire;
 
 import com.majeur.projet.apiCommunication.FireObject;
 import com.majeur.projet.apiCommunication.StaticGet;

@@ -1,4 +1,4 @@
-package com.majeur.projet.emergencyManager.Vehicle;
+package com.majeur.projet.emergencyManager.vehicle;
 
 /**
  * Methods:
