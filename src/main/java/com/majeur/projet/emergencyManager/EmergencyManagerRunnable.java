@@ -4,7 +4,6 @@ import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
 import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.VehicleObject;
-import com.majeur.projet.emergencyManager.vehicle.SendVehicle;
 import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.ThreadEntity;
 import com.majeur.projet.threading.ThreadRepository;
@@ -32,7 +31,7 @@ public class EmergencyManagerRunnable implements Runnable {
                     List<MissionEntity> missions = h.getMissions();
                     FacilityObject facility = StaticGet.getTeamFacility();
                     List<FireObject> fires = Arrays.asList(StaticGet.getFires());
-                    List<FireObject> firesInArea = SendVehicle.GetFireInArea(fires, facility);
+                    List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(fires, facility);
 
                     synchronized(hrepo){
                         for(MissionEntity mission : missions){
@@ -41,8 +40,8 @@ public class EmergencyManagerRunnable implements Runnable {
 
                                 VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
                                 MissionEntity newMission =
-                                        SendVehicle.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
-
+                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
+                                // Calculer pas (step) et ajouter à mission
                                 mission.setDestinationId(newMission.getDestinationId());
                                 mission.setVehicleState(newMission.getVehicleState());
                             }

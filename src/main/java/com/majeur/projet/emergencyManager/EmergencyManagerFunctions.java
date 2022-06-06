@@ -1,4 +1,4 @@
-package com.majeur.projet.emergencyManager.vehicle;
+package com.majeur.projet.emergencyManager;
 
 
 import com.majeur.projet.apiCommunication.FacilityObject;
@@ -22,7 +22,7 @@ import java.util.List;
  * assignVehicles()
  * findDestination(vehicleId, listFire)
  */
-public class SendVehicle {
+public class EmergencyManagerFunctions {
 	ArrayList<FireObject> listFire = new ArrayList<FireObject>();
 	// ArrayList<VehicleObject> listVehicle = new ArrayList<VehicleObject>();
 	

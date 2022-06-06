@@ -34,42 +34,28 @@ public class MoveRunnable implements Runnable{
 
                     synchronized(hrepo){
                         for(MissionEntity mission : missions){
-                            double lat;
-                            double lon;
                             VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
 
                             // On vérifie si le feu existe toujours
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
-                                //TODO Faire sans spammer l'api
-                                try{
-                                    FireObject fire = StaticGet.getFire(String.valueOf(mission.getDestinationId()));
-                                    // Le feu existe toujours
-                                }catch(HttpServerErrorException e){
-                                    // Le feu n'existe plus
-                                    mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
-                                    continue;
-                                }
-
+                                    if (!MoveFunctions.doesFireExist(mission)){
+                                        mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
+                                        continue;
+                                    }
                             }
 
-                            if(mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
-
-                                lat = facility.getLat();
-                                lon = facility.getLon();
-                                mission.setVehicleState(VehicleState.AT_FACILITY);
-
-                            } else if (mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)) {
-                                //TODO Faire propre sans spammer l'api
-                                FireObject fire = StaticGet.getFire(String.valueOf(mission.getDestinationId()));
-                                lat = fire.getLat();
-                                lon = fire.getLon();
-                                mission.setVehicleState(VehicleState.AT_FIRE);
-                            }else{
+                            if(!MoveFunctions.isVehicleMoving(mission)){
                                 continue;
                             }
-                            vehicle.setLat(lat);
-                            vehicle.setLon(lon);
+
+                            double[] destCoords = MoveFunctions.getDestinationCoords(mission, facility);
+
+                            double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
+                            //double[] coords = MoveFunctions.getDestination_Linear(mission, destCoords);
+
+                            vehicle.setLat(coords[0]);
+                            vehicle.setLon(coords[1]);
                             StaticVehicle.addVehicle(vehicle);
                         }
                         h.setMissions(missions);
