@@ -7,7 +7,7 @@ public class VehicleObject {
     private String liquidType;
     private float liquidQuantity;
     private int crewMember;
-    private int facilityRefId;
+    private int facilityRefID;
     private float fuel;
     private String type;
 
@@ -62,12 +62,12 @@ public class VehicleObject {
         this.crewMember = crewMember;
     }
 
-    public int getFacilityRefId() {
-        return facilityRefId;
+    public int getFacilityRefID() {
+        return facilityRefID;
     }
 
-    public void setFacilityRefId(int facilityRefId) {
-        this.facilityRefId = facilityRefId;
+    public void setFacilityRefID(int facilityRefID) {
+        this.facilityRefID = facilityRefID;
     }
 
     public float getFuel() {
@@ -84,5 +84,20 @@ public class VehicleObject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleObject{" +
+                "id=" + id +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", liquidType='" + liquidType + '\'' +
+                ", liquidQuantity=" + liquidQuantity +
+                ", crewMember=" + crewMember +
+                ", facilityRefId=" + facilityRefID +
+                ", fuel=" + fuel +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

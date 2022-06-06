@@ -1,8 +1,7 @@
 package com.majeur.projet.movement;
 
 import com.majeur.projet.apiCommunication.*;
-import com.majeur.projet.emergencyManager.vehicle.SendVehicle;
-import com.majeur.projet.threading.MissionObject;
+import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.ThreadEntity;
 import com.majeur.projet.threading.ThreadRepository;
 import com.majeur.projet.threading.VehicleState;
@@ -28,19 +27,22 @@ public class MoveRunnable implements Runnable{
                 Thread.sleep(5000);
 
                 for (ThreadEntity h : this.hrepo.findAll()) {
-                    //System.out.println(h.toString());
-                    //TODO fix problème plusieurs thread entity ??
+                    System.out.println(h.getId());
+                    // TODO fix problème plusieurs thread entity ??
                     if(h.getMissions() == null){
+                        System.out.println("Mauvais thread");
                         continue;
+                    }else{
+                        System.out.println("bon thread");
                     }
-                    System.out.println("OK");
-                    List<MissionObject> missions = h.getMissions();;
+                    System.out.println(h);
+                    List<MissionEntity> missions = h.getMissions();;
                     FacilityObject facility = StaticGet.getTeamFacility();
                     List<FireObject> fires = Arrays.asList(StaticGet.getFires());
                     //List<FireObject> firesInArea = SendVehicle.GetFireInArea(fires, facility);
 
                     synchronized(hrepo){
-                        for(MissionObject mission : missions){
+                        for(MissionEntity mission : missions){
                             double lat;
                             double lon;
                             VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));

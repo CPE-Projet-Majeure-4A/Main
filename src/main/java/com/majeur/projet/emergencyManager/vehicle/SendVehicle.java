@@ -4,7 +4,7 @@ package com.majeur.projet.emergencyManager.vehicle;
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
 import com.majeur.projet.apiCommunication.VehicleObject;
-import com.majeur.projet.threading.MissionObject;
+import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.VehicleState;
 
 import java.util.Iterator;
@@ -67,9 +67,9 @@ public class SendVehicle {
 	* launches sendVehicleToFire(vehicleId, fireId) or sendVehicleToFacility(vehicleId)
 	* return void
 	*/
-	public static MissionObject SelectVehicle(List<FireObject> listFire, int vehicleId, int facilityId, VehicleObject V) {
+	public static MissionEntity SelectVehicle(List<FireObject> listFire, int vehicleId, int facilityId, VehicleObject V) {
 		int fireId = WeightFunction(listFire, V);
-		MissionObject mission = new MissionObject(vehicleId, 0, null);
+		MissionEntity mission = new MissionEntity(vehicleId, 0, null);
 		if (fireId == -1) {
 			mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
 			mission.setDestinationId(facilityId);

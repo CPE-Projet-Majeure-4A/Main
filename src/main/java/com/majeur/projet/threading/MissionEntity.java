@@ -1,14 +1,25 @@
 package com.majeur.projet.threading;
 
-public class MissionObject {
+import javax.persistence.*;
+
+@Entity
+public class MissionEntity {
+    @Id
+    @GeneratedValue
+    private int missionId;
+
     private int vehicleId;
     private int destinationId;
     private VehicleState vehicleState;
 
-    public MissionObject(int vehicleId, int destinationId, VehicleState vehicleState) {
+    public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState) {
         this.vehicleId = vehicleId;
         this.destinationId = destinationId;
         this.vehicleState = vehicleState;
+    }
+
+    public MissionEntity() {
+
     }
 
     public int getVehicleId() {
@@ -33,5 +44,14 @@ public class MissionObject {
 
     public void setVehicleState(VehicleState vehicleState) {
         this.vehicleState = vehicleState;
+    }
+
+    @Override
+    public String toString() {
+        return "MissionObject{" +
+                "vehicleId=" + vehicleId +
+                ", destinationId=" + destinationId +
+                ", vehicleState=" + vehicleState +
+                '}';
     }
 }

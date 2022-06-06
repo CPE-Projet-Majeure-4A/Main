@@ -46,7 +46,7 @@ public class StaticVehicle {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("crewMember", vehicle.getCrewMember());
-        jsonObject.put("facilityRefID", vehicle.getFacilityRefId());
+        jsonObject.put("facilityRefID", vehicle.getFacilityRefID());
         jsonObject.put("fuel", vehicle.getFuel());
         jsonObject.put("id", vehicle.getId());
         jsonObject.put("lat", vehicle.getLat());

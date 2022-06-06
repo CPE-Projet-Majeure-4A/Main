@@ -65,17 +65,18 @@ public class ThreadService {
     @Bean()
     //@Bean(initMethod = "init")
     public void init() {
-        ArrayList<MissionObject> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
+        ArrayList<MissionEntity> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
         String name = "default";
         List<VehicleObject> vehicles = Arrays.asList(StaticGet.getVehicles());
         int facilityId = StaticGet.getTeamFacility().getId();
         for(VehicleObject vehicle : vehicles){
-            if(vehicle.getFacilityRefId() == facilityId){
-                missions.add(new MissionObject(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY));
+            if(vehicle.getFacilityRefID() == facilityId){
+                System.out.println("ajouté");
+                missions.add(new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY));
             }
         }
-        ThreadEntity h1 =new ThreadEntity(1, missions, name);
-        h1.setMissions(missions);
+        ThreadEntity h1 = new ThreadEntity(1, missions, name);
+        //System.out.println(h1.getMissions().toString());
         threadRepository.save(h1);
         System.out.println("Thread initalized");
     }
