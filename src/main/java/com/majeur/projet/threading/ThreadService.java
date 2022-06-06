@@ -58,7 +58,8 @@ public class ThreadService {
         }
     }
 
-    @Bean(initMethod="init")
+    @Bean()
+    //@Bean(initMethod = "init")
     public void init() {
         ArrayList<MissionObject> missions = new ArrayList<>(); //TODO Utiliser avec mot clef synchronized
         ThreadEntity h1=new ThreadEntity(1, "default");

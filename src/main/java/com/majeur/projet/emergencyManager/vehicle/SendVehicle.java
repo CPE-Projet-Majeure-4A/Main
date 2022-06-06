@@ -1,10 +1,9 @@
 package com.majeur.projet.emergencyManager.vehicle;
 
 
-import com.majeur.projet.ApiCommunication.FireObject;
-import com.majeur.projet.ApiCommunication.FacilityObject;
-import com.majeur.projet.ApiCommunication.VehicleObject;
-import com.majeur.projet.ApiCommunication.StaticGet;
+import com.majeur.projet.apiCommunication.FacilityObject;
+import com.majeur.projet.apiCommunication.FireObject;
+import com.majeur.projet.apiCommunication.VehicleObject;
 
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -45,9 +44,9 @@ public class SendVehicle {
 	 * check distance and if distance greater than 50 delete fire from list
 	 * return listFire
 	 */
-	public static ArrayList GetFireInArea(ArrayList listFire, FacilityObject F) {
+	public static ArrayList<FireObject> GetFireInArea(ArrayList<FireObject> listFire, FacilityObject F) {
 		Iterator<FireObject> iteratorFires = listFire.iterator();
-		while (iteratorFires.hasNext()  == true) {
+		while (iteratorFires.hasNext()) {
 			FireObject currentFire = iteratorFires.next();
 			double Distance = calculDistance(currentFire.getLat(), F.getLat(), currentFire.getLon(), F.getLon());
 			if (Distance < 50) {
@@ -64,12 +63,11 @@ public class SendVehicle {
 	* launches sendVehicleToFire(vehicleId, fireId) or sendVehicleToFacility(vehicleId)
 	* return void
 	*/
-	public static void SelectVehicle(ArrayList listFire, VehicleObject V) {
+	public static void SelectVehicle(ArrayList<FireObject> listFire, VehicleObject V) {
 		int fireId = WeightFunction(listFire, V);
 		if (fireId == -1) {
 			// sendVehicleToFacility(V.getId());
-		}
-		else {
+		} else {
 			// sendVehicleToFire(V.getId(), fireId);
 		}
 	}
@@ -84,10 +82,10 @@ public class SendVehicle {
 	* return fireId (from the fire with highest weight)
 	*/
 	// if fireId = -1 alors on a pas de feu pris en charge par le véhicule
-	public static int WeightFunction(ArrayList listFire, VehicleObject V) {
+	public static int WeightFunction(ArrayList<FireObject> listFire, VehicleObject V) {
 		Iterator<FireObject> iteratorFires = listFire.iterator();
 		int fireId = -1;
-		while (iteratorFires.hasNext()  == true) {
+		while (iteratorFires.hasNext()) {
 			FireObject currentFire = iteratorFires.next();
 			double Weight;
 			double MaxWeight = 0;

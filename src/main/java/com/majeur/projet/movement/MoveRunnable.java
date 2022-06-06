@@ -6,7 +6,7 @@ import com.majeur.projet.threading.ThreadRepository;
 //TODO Régler problèmes et adapter le code du prof à 2 threads différents
 public class MoveRunnable implements Runnable{
 
-    private ThreadRepository hrepo;
+    private final ThreadRepository hrepo;
     boolean isEnd = false;
 
     public MoveRunnable(ThreadRepository hrepo) {
