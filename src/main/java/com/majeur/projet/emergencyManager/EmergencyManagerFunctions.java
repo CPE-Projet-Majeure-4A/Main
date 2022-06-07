@@ -69,14 +69,14 @@ public class EmergencyManagerFunctions {
 	*/
 	public static MissionEntity SelectVehicle(List<FireObject> listFire, int vehicleId, int facilityId, VehicleObject V) {
 		int fireId = WeightFunction(listFire, V);
-		System.out.println(listFire);
+		// System.out.println(listFire);
 		MissionEntity mission = new MissionEntity(vehicleId, 0, null);
 		if (fireId == -1) {
 			mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
 			mission.setDestinationId(facilityId);
 		} else {
 			mission.setVehicleState(VehicleState.GOING_TO_FIRE);
-			System.out.println("GOING TO FIRE; Vehicule : " + vehicleId + " Fire : " + fireId);
+			// System.out.println("GOING TO FIRE; Vehicule : " + vehicleId + " Fire : " + fireId);
 			mission.setDestinationId(fireId);
 		}
 		return mission;

@@ -11,6 +11,9 @@ import com.majeur.projet.threading.VehicleState;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class EmergencyManagerRunnable implements Runnable {
 
@@ -31,13 +34,19 @@ public class EmergencyManagerRunnable implements Runnable {
                     synchronized(hrepo){
 
                         List<MissionEntity> missions = h.getMissions();
-                        System.out.println("EM: "+missions);
+                        //System.out.println("EM: "+missions);
+
                         FacilityObject facility = StaticGet.getTeamFacility();
-                        List<FireObject> fires = Arrays.asList(StaticGet.getFires());
-                        List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(fires, facility);
+                        List<FireObject> listFires = Arrays.asList(StaticGet.getFires());
+
+                        List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(listFires, facility);
+
+                        List<VehicleObject> listVehicles = List.of(StaticGet.getVehicles());
+                        Map<Integer, VehicleObject> vehicleMap = listVehicles.stream()
+                                .collect(Collectors.toMap(VehicleObject::getId, Function.identity()));
 
                         for(MissionEntity mission : missions){
-                            VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+                            VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
                         	if(vehicle.getLiquidQuantity() != 0) {
 	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
 	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
@@ -50,7 +59,7 @@ public class EmergencyManagerRunnable implements Runnable {
                         	}
 
                         }
-                        System.out.println(missions.toString());
+                        //System.out.println(missions.toString());
                         h.setMissions(missions);
                         hrepo.save(h);
                     }

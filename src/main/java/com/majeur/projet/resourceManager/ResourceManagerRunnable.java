@@ -9,6 +9,9 @@ import com.majeur.projet.threading.VehicleState;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ResourceManagerRunnable implements Runnable{
 
@@ -29,13 +32,24 @@ public class ResourceManagerRunnable implements Runnable{
 
                     synchronized(hrepo){
                         List<MissionEntity> missions = h.getMissions();
-                        System.out.println("Move: "+ missions);
-                        FacilityObject facility = StaticGet.getTeamFacility();
-                        List<FireObject> fires = Arrays.asList(StaticGet.getFires());
-                        //List<FireObject> firesInArea = SendVehicle.GetFireInArea(fires, facility);
+
+                        List<VehicleObject> listVehicles = List.of(StaticGet.getVehicles());
+                        Map<Integer, VehicleObject> vehicleMap = listVehicles.stream()
+                                .collect(Collectors.toMap(VehicleObject::getId, Function.identity()));
 
                         for(MissionEntity mission : missions) {
-                            //TODO
+                            VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
+                            if(mission.getVehicleState().equals(VehicleState.AT_FIRE)){
+                                ResourceManagerFunctions.increaseFuel(vehicle);
+                                ResourceManagerFunctions.increaseLiquid(vehicle);
+                            }else if(mission.getVehicleState().equals(VehicleState.AT_FACILITY)){
+                                ResourceManagerFunctions.decreaseFuel(vehicle);
+                                ResourceManagerFunctions.decreaseLiquid(vehicle);
+                            }else{
+                                continue;
+                            }
+                            StaticVehicle.addVehicle(vehicle);
+
                         }
                         h.setMissions(missions);
                         hrepo.save(h);

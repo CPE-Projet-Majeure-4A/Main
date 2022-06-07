@@ -5,12 +5,13 @@ import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.ThreadEntity;
 import com.majeur.projet.threading.ThreadRepository;
 import com.majeur.projet.threading.VehicleState;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-//TODO Régler problèmes et adapter le code du prof à 2 threads différents
 public class MoveRunnable implements Runnable{
 
     private final ThreadRepository hrepo;
@@ -32,16 +33,22 @@ public class MoveRunnable implements Runnable{
                         List<MissionEntity> missions = h.getMissions();
                         System.out.println("Move: "+ missions);
                         FacilityObject facility = StaticGet.getTeamFacility();
-                        List<FireObject> fires = Arrays.asList(StaticGet.getFires());
-                        //List<FireObject> firesInArea = SendVehicle.GetFireInArea(fires, facility);
+                        List<FireObject> listFires = Arrays.asList(StaticGet.getFires());
+
+                        Map<Integer, FireObject> fireMap = listFires.stream()
+                                .collect(Collectors.toMap(FireObject::getId, Function.identity()));
+
+                        List<VehicleObject> listVehicles = List.of(StaticGet.getVehicles());
+                        Map<Integer, VehicleObject> vehicleMap = listVehicles.stream()
+                                .collect(Collectors.toMap(VehicleObject::getId, Function.identity()));
 
                         for(MissionEntity mission : missions){
-                            VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+                            VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
 
                             // On vérifie si le feu existe toujours
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
-                                    if (!MoveFunctions.doesFireExist(mission) || (vehicle.getLiquidQuantity() <= 0)){
+                                    if (!MoveFunctions.doesFireExist(mission, fireMap) || (vehicle.getLiquidQuantity() <= 1)){
                                         mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
                                         continue;
                                     }
@@ -51,7 +58,7 @@ public class MoveRunnable implements Runnable{
                                 continue;
                             }
 
-                            double[] destCoords = MoveFunctions.getDestinationCoords(mission, facility);
+                            double[] destCoords = MoveFunctions.getDestinationCoords(mission, facility, fireMap);
 
                             double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
                             //double[] coords = MoveFunctions.getDestination_Linear(mission, destCoords);
@@ -59,9 +66,13 @@ public class MoveRunnable implements Runnable{
                             vehicle.setLat(coords[0]);
                             vehicle.setLon(coords[1]);
                             //StaticVehicle.updateVehicle(Integer.toString(vehicle.getId()), vehicle);
-                            StaticVehicle.addVehicle(vehicle); //TODO Verif
+                            StaticVehicle.addVehicle(vehicle);
 
-                            vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+                            if(MoveFunctions.isVehicleAtDestination(destCoords, coords, mission.getStep())){
+                                mission.setVehicleState(MoveFunctions.setVehicleAtDestination(mission.getVehicleState()));
+                            }
+
+                            StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
                             //System.out.println("Updated coords: " + vehicle.getLat() +";"+ vehicle.getLon());
 
                         }
@@ -88,8 +99,5 @@ public class MoveRunnable implements Runnable{
         this.isEnd = true;
     }
 
-    public void update(){
-
-    }
 }
 

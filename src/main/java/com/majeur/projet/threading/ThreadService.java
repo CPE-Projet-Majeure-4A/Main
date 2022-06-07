@@ -9,6 +9,7 @@ import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.VehicleObject;
 import com.majeur.projet.emergencyManager.EmergencyManagerRunnable;
 import com.majeur.projet.movement.MoveRunnable;
+import com.majeur.projet.resourceManager.ResourceManagerRunnable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,10 @@ public class ThreadService {
     private final ThreadRepository threadRepository;
     EmergencyManagerRunnable emergencyManagerRunnable;
     MoveRunnable moveRunnable;
+    ResourceManagerRunnable resourceManagerRunnable;
     private final Thread emergencyManagerThread;
     private final Thread moveThread;
+    private final Thread resourceManagerThread;
 
     public ThreadService(ThreadRepository threadRepository) {
         //Replace the @Autowire annotation....
@@ -29,13 +32,16 @@ public class ThreadService {
         //Create a Runnable is charge of executing cyclic actions
         this.emergencyManagerRunnable =new EmergencyManagerRunnable(this.threadRepository);
         this.moveRunnable =new MoveRunnable(this.threadRepository);
+        this.resourceManagerRunnable = new ResourceManagerRunnable(this.threadRepository);
 
         // A Runnable is held by a Thread which manage lifecycle of the Runnable
         emergencyManagerThread = new Thread(emergencyManagerRunnable);
         moveThread = new Thread(moveRunnable);
+        resourceManagerThread = new Thread(resourceManagerRunnable);
         // The Thread is started and the method run() of the associated DisplayRunnable is launch
         emergencyManagerThread.start();
         moveThread.start();
+        resourceManagerThread.start();
     }
 
 
@@ -53,10 +59,12 @@ public class ThreadService {
         //Call the user defined stop method of the runnable
         this.emergencyManagerRunnable.stop();
         this.moveRunnable.stop();
+        this.resourceManagerRunnable.stop();
         try {
             //force the thread to stop
             this.emergencyManagerThread.join(100);
             this.moveThread.join(100);
+            this.resourceManagerThread.join(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
