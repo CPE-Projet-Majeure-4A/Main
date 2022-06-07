@@ -108,7 +108,7 @@ public class EmergencyManagerFunctions {
 			Weight += 100; // On utilise ALL pour l'instant donc 1.0f en efficacité
 			
 			float firePower = currentFire.getIntensity();
-			float vehiclePower = V.getLiquidQuantity(); // ALL = 1 efficacité
+			float vehiclePower = V.getLiquidQuantity() * 1f * 0.1f; // ALL = 1 efficacité et 0.1 atténuation feu
 			if (firePower > vehiclePower) {
 				Weight -= (firePower - vehiclePower) * 10;
 				if (Weight < 0) {
@@ -117,9 +117,13 @@ public class EmergencyManagerFunctions {
 			}
 			if (MaxWeight < Weight) {
 				MaxWeight = Weight;
-				fireId = currentFire.getId();
+				if (MaxWeight >= 100) {
+					fireId = currentFire.getId();
+				}
+				else {
+					fireId = -1;
+				}
 			}
-
 		}
 		return fireId;
 	}
