@@ -1,6 +1,6 @@
 //---------------------------------INITIALISATION DE LA MAP -----------------------------------------------------------------
 
-var id_groupe=214;
+var id_groupe=845;
 
 
 const mapboxToken = "pk.eyJ1IjoiYXJ0aHVyb2xpdmllciIsImEiOiJjbDN2YTYxZW0wMzdiM21wOGE3eGxyZjNkIn0.TEuLBTV8qSpy8i9zveoxGg";
@@ -54,10 +54,11 @@ initMap();
 
 
 
+
 // ------------------------------------------------------Recu-peration des feux pour l'affichage 
 function generate_feu() {
 
-    const URL = "http://vps.cpe-sn.fr:8081/fire";
+    const URL = "http://localhost:8080/fire";
     let context = {
         method: 'GET'
     };
@@ -80,11 +81,32 @@ function callback(response) {
         ajout_feu_map(feu);
     }
 }
+//modif fonction callback
+   /* i=0;
+    while(i < listeMarqueur.length){
+        map.removeLayer(listeMarqueur[i])
+        i++;
+    }
+    i=0;
+ while(i<response.length){
+        var marker = L.marker([response[i].lat, response[i].lon], {icon: fireIcon}, {title: response[i].type}).addTo(map);
+        marker.bindPopup("id : " +response[i].id + "<br> Position : [ " + response[i].lat + "," + response[i].lon + "] <br> Type feu : " + response[i].type+"<br> Intensité : " + response[i].intensity + "<br> Range : " + response[i].range);
+        marker.on('click', onClick);
+        if(document.getElementById(response[i].type).checked && response[i].intensity < document.getElementById("Intensity").value && response[i].range < document.getElementById("Range").value){
+            marker.setOpacity(1);
+        }
+        else{
+            marker.setOpacity(0)
 
+        }
+        listeMarqueur.push(marker);
+        i++;
+    }
+*/
 // ------------------------------------------------------Recu-peration des caserne pour l'affichage 
 function generate_caserne() {
 
-    const URL = "http://vps.cpe-sn.fr:8081/facility";
+    const URL = "http://localhost:8080/facility";
     let context = {
         method: 'GET'
     };
@@ -193,7 +215,7 @@ async function send()
 
 
 
-    const rawResponse = await fetch("http://vps.cpe-sn.fr:8081/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
+    const rawResponse = await fetch("http://localhost:8080/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -214,7 +236,7 @@ async function send()
 
 function generate_vehicle() {
 
-    const GET_CHUCK_URL="http://vps.cpe-sn.fr:8081/vehicle"; 
+    const GET_CHUCK_URL="http://localhost:8080/vehicle";
     let context =   {
                         method: 'GET'
                     };
@@ -308,4 +330,8 @@ $(document).ready(function() {
 var cas_lon = [];
 var cas_lat = [];
 
+//feu
+function callback(response){
 
+   
+}
