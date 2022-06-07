@@ -24,7 +24,6 @@ public class MissionEntity {
     }
 
     public MissionEntity() {
-
     }
 
     public int getVehicleId() {

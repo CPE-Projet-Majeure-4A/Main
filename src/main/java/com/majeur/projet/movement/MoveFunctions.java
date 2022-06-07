@@ -9,7 +9,6 @@ import org.springframework.web.client.HttpServerErrorException;
 
 public class MoveFunctions {
 
-    // Warning chelou
     public static boolean doesFireExist(MissionEntity mission){
         //TODO Faire sans spammer l'api
         try{
@@ -28,6 +27,7 @@ public class MoveFunctions {
         if(mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
             lat = facility.getLat();
             lon = facility.getLon();
+            //TODO Déplacer qd on se débarasse de la téléportation
             mission.setVehicleState(VehicleState.AT_FACILITY);
 
         } else {
@@ -35,6 +35,7 @@ public class MoveFunctions {
             FireObject fire = StaticGet.getFire(String.valueOf(mission.getDestinationId()));
             lat = fire.getLat();
             lon = fire.getLon();
+            //TODO Déplacer qd on se débarasse de la téléportation
             mission.setVehicleState(VehicleState.AT_FIRE);
         }
         return new double[]{lat, lon};
