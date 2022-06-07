@@ -23,7 +23,7 @@
     <div id="ajouts_vehicules">
 
         
-            <form action="/">
+            <form action="/static">
                 <div class="title">
                     <i class="fas fa-pencil-alt"></i>
                     <h2>Nouveau véhicule</h2>
@@ -56,7 +56,7 @@
             
 
     
-            <form action="/">
+            <form action="/static">
                 <div class="title">
                     <i class="fas fa-pencil-alt"></i>
                     <h2>Supprimer un véhicule</h2>
@@ -74,19 +74,36 @@
 
             <form>
                 <fieldset>
-                    <legend>Couches</legend>
+                    <legend>Filtres Feux</legend>
                     <div>
-                        <input type="checkbox" id="pizzeria" name="interest" value="pizzeria" >
-                        <label for="pizzeria">Afficher seulement les feux à moins de 5 km de la caserne </label>
+                        <input type="checkbox" id="A" name="interest" value="A" >
+                        <label for="feu">A </label>
                     </div>
                     <div>
-                        <input type="checkbox" id="sport" name="interest" value="sport" checked>
-                        <label for="sport">Casernes</label>
+                        <input type="checkbox" id="B" name="interest" value="B" >
+                        <label for="feu">B</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="sport" name="interest" value="sport" checked>
-                        <label for="sport">Casernes</label>
+                        <input type="checkbox" id="C" name="interest" value="C" >
+                        <label for="feu">C</label>
                     </div>
+                                        <div>
+                        <input type="checkbox" id="D" name="interest" value="D" >
+                        <label for="feu">D</label>
+                    </div>
+                                        <div>
+                        <input type="checkbox" id="E" name="interest" value="E" >
+                        <label for="feu">D</label>
+                    </div>
+                     <div>
+				        <input type="range" id="Intensity" name="Intensity" onchange="generateFeux()" min=0 max=100 value=100>
+				        <label for="Intensity">Intensité</label>
+				      </div>
+				
+				      <div>
+				        <input type="range" id="Range" name="Range" onchange="generateFeux()" min=0 max=100 value=100>
+				        <label for="Range">Etendue</label>
+				      </div>
                 </fieldset>
             </form>
 
