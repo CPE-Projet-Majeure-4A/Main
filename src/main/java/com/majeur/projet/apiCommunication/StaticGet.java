@@ -14,7 +14,7 @@ public class StaticGet {
     //@Value("com.majeur.projet.teamUuid")
     private static String teamUuid = "a1cc702e-de17-4796-8886-0b937c406ad1";
 
-    private static String facilityId = "845";
+    private static String facilityId = "662859";
 
     public static FireObject[] getFires()
     {

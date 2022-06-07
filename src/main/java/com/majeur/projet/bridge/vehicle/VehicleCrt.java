@@ -22,7 +22,7 @@ public class VehicleCrt {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/vehicle/{teamUuid}/{id}")
     public void vehicleCrtPut(@PathVariable String id, @PathVariable String teamUuid, @RequestBody VehicleObject body) {
-        StaticVehicle.updateVehicle(id, body, teamUuid);
+        StaticVehicle.updateVehicle(body);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/vehicle/{teamUuid}/{id}")

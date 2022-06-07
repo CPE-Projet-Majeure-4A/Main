@@ -131,7 +131,7 @@ var Icon_Caserne2 = L.icon({
 function ajout_caserne_map(caserne) {
     var description = "<h2>Caserne N*" + caserne.id + "</h2>  <h3>Nom:" + caserne.name + " </h3>  <h3>MaxVehicleSpace: " + caserne.maxVehicleSpace + "</h3>  <h3>PeopleCapacity: " + caserne.peopleCapacity + " </h3>";
 
-    if (caserne.id == id_groupe) {
+    if (caserne.id === id_groupe) {
         cas_lon.push(caserne.lon);
         cas_lat.push()
         cas_lat += caserne.lat;
@@ -254,7 +254,7 @@ var Icon_Camion2 = L.icon({
 function ajout_vehicle_map(vehicle) {
     var description = "<h2>VEHICULE N*" + vehicle.id + "</h2>  <h3>crewMember:" + vehicle.crewMember + " </h3>  <h3>LiquidType: " + vehicle.liquidType + "</h3>  <h3>fuel: " + vehicle.fuel + " </h3>  <h3>Type : " + vehicle.type ;
     if (vehicle.facilityRefID===id_groupe){
-        if(vehicle.type=="CAR"){
+        if(vehicle.type==="CAR"){
             L.marker([vehicle.lat, vehicle.lon], {
                 icon: Icon_Camion
             }).addTo(CAMIONS).bindPopup(description);

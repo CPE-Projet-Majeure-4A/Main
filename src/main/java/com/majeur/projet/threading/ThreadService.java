@@ -71,13 +71,14 @@ public class ThreadService {
         int facilityId = StaticGet.getTeamFacility().getId();
         for(VehicleObject vehicle : vehicles){
             if(vehicle.getFacilityRefID() == facilityId){
-                System.out.println("ajouté");
+                MissionEntity mission = new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY);
                 //Initialisation des missions
-                missions.add(new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY));
+                missions.add(mission);
             }
         }
         ThreadEntity h1 = new ThreadEntity(1, missions, name);
         threadRepository.save(h1);
+        System.out.println(threadRepository.findById(1).get().getMissions());
         System.out.println("Thread initalized");
     }
 

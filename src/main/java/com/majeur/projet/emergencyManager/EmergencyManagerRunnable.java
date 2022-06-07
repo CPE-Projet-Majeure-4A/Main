@@ -28,14 +28,16 @@ public class EmergencyManagerRunnable implements Runnable {
                 Thread.sleep(10000);
 
                 for (ThreadEntity h : this.hrepo.findAll()) {
-                    List<MissionEntity> missions = h.getMissions();
-                    FacilityObject facility = StaticGet.getTeamFacility();
-                    List<FireObject> fires = Arrays.asList(StaticGet.getFires());
-                    List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(fires, facility);
-
                     synchronized(hrepo){
+
+                        List<MissionEntity> missions = h.getMissions();
+                        System.out.println("EM: "+missions);
+                        FacilityObject facility = StaticGet.getTeamFacility();
+                        List<FireObject> fires = Arrays.asList(StaticGet.getFires());
+                        List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(fires, facility);
+
                         for(MissionEntity mission : missions){
-                        	VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+                            VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
                         	if(vehicle.getLiquidQuantity() != 0) {
 	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
 	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
@@ -48,7 +50,9 @@ public class EmergencyManagerRunnable implements Runnable {
                         	}
 
                         }
+                        System.out.println(missions.toString());
                         h.setMissions(missions);
+                        hrepo.save(h);
                     }
 
 

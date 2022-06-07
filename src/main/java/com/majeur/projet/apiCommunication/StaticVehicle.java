@@ -17,7 +17,8 @@ public class StaticVehicle {
     //@Value("com.majeur.projet.teamUuid")
     private static String teamUuid = "a1cc702e-de17-4796-8886-0b937c406ad1";
 
-    public static void updateVehicle(String vehicleId, VehicleObject vehicle, String teamUuid){
+    public static void updateVehicle(VehicleObject vehicle){
+        String vehicleId = Integer.toString(vehicle.getId());
         //PUT peut ne pas fonctionner à cause d'un bug de l'API
         // Si problème utiliser POST en précisant l'id dans body
         RestTemplate restTemplate = new RestTemplate();
@@ -71,6 +72,8 @@ public class StaticVehicle {
 
         HttpEntity<String> request =
                 new HttpEntity<>(jsonObject.toString(), headers);
+
+        System.out.println("POST: " + request);
         return restTemplate.postForObject(url+"/"+teamUuid, request, VehicleObject.class);
     }
 }
