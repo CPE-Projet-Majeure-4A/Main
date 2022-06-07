@@ -35,16 +35,17 @@ public class EmergencyManagerRunnable implements Runnable {
 
                     synchronized(hrepo){
                         for(MissionEntity mission : missions){
-                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
-                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
-
-                                VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
-                                MissionEntity newMission =
-                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
-                                // Calculer pas (step) et ajouter à mission
-                                mission.setDestinationId(newMission.getDestinationId());
-                                mission.setVehicleState(newMission.getVehicleState());
-                            }
+                        	VehicleObject vehicle = StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
+                        	if(vehicle.getLiquidQuantity() != 0) {
+	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
+	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
+	                                MissionEntity newMission =
+	                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
+	                                // Calculer pas (step) et ajouter à mission
+	                                mission.setDestinationId(newMission.getDestinationId());
+	                                mission.setVehicleState(newMission.getVehicleState());
+	                            }
+                        	}
 
                         }
                         h.setMissions(missions);
