@@ -3,6 +3,7 @@ package com.majeur.projet.emergencyManager;
 
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
+import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.VehicleObject;
 import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.VehicleState;
@@ -70,7 +71,7 @@ public class EmergencyManagerFunctions {
 	public static MissionEntity SelectVehicle(List<FireObject> listFire, int vehicleId, int facilityId, VehicleObject V) {
 		int fireId = WeightFunction(listFire, V);
 		// System.out.println(listFire);
-		MissionEntity mission = new MissionEntity(vehicleId, 0, null);
+		MissionEntity mission = new MissionEntity(vehicleId, 0, null, 0);
 		if (fireId == -1) {
 			mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
 			mission.setDestinationId(facilityId);
@@ -128,5 +129,22 @@ public class EmergencyManagerFunctions {
 			}
 		}
 		return fireId;
+	}
+	public static double ComputeStep(VehicleObject vehicle, int fireId, FacilityObject facility, VehicleState state) {
+
+		double step = 0;
+		if(state.equals(VehicleState.GOING_TO_FACILITY)) {
+			double distance = Math.sqrt(Math.pow(facility.getLon()-vehicle.getLon(), 2)+Math.pow(facility.getLat()-vehicle.getLat(), 2));
+			int wayPoint = (int) Math.max(Math.round(distance/2), 5);
+			step = distance / wayPoint;
+		}
+		else if(state.equals(VehicleState.GOING_TO_FIRE)) {
+			FireObject fire = StaticGet.getFire(Integer.toString(fireId));
+			double distance = Math.sqrt(Math.pow(fire.getLon()-vehicle.getLon(), 2)+Math.pow(fire.getLat()-vehicle.getLat(), 2));
+			int wayPoint = (int) Math.max(Math.round(distance/2), 5);
+			step = distance / wayPoint;
+		}
+		return step;
+
 	}
 }

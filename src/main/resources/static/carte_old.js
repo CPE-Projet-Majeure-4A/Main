@@ -1,8 +1,6 @@
 //---------------------------------INITIALISATION DE LA MAP -----------------------------------------------------------------
 
-var id_groupe=662859;
-var markers = [];
-var a=0;
+var id_groupe=845;
 
 
 const mapboxToken = "pk.eyJ1IjoiYXJ0aHVyb2xpdmllciIsImEiOiJjbDN2YTYxZW0wMzdiM21wOGE3eGxyZjNkIn0.TEuLBTV8qSpy8i9zveoxGg";
@@ -36,7 +34,6 @@ function initMap() {
 
 
 initMap();
-lgMarkers = new L.LayerGroup();
 
 
 
@@ -60,7 +57,7 @@ lgMarkers = new L.LayerGroup();
 // ------------------------------------------------------Recu-peration des feux pour l'affichage 
 function generate_feu() {
 
-    const URL = "http://vps.cpe-sn.fr:8081/fire";
+    const URL = "http://localhost:8080/fire";
     let context = {
         method: 'GET'
     };
@@ -80,18 +77,14 @@ function callback(response) {
     for (feu of response) {
 
         FireList.push(feu);
-        if (document.getElementById(feu.type).checked && feu.intensity <= document.getElementById("Intensity").value 
-        && feu.range <= document.getElementById("Range").value){
-            ajout_feu_map(feu);
-        }
+        ajout_feu_map(feu);
     }
 }
-
 
 // ------------------------------------------------------Recu-peration des caserne pour l'affichage 
 function generate_caserne() {
 
-    const URL = "http://vps.cpe-sn.fr:8081/facility";
+    const URL = "http://localhost:8080/facility";
     let context = {
         method: 'GET'
     };
@@ -138,14 +131,15 @@ var Icon_Caserne2 = L.icon({
 function ajout_caserne_map(caserne) {
     var description = "<h2>Caserne N*" + caserne.id + "</h2>  <h3>Nom:" + caserne.name + " </h3>  <h3>MaxVehicleSpace: " + caserne.maxVehicleSpace + "</h3>  <h3>PeopleCapacity: " + caserne.peopleCapacity + " </h3>";
 
-    if (caserne.id == id_groupe) {
-        cas_lon = caserne.lon;
-        cas_lat = caserne.lat;
-        markers += L.marker([caserne.lat, caserne.lon], {
+    if (caserne.id === id_groupe) {
+        cas_lon.push(caserne.lon);
+        cas_lat.push()
+        cas_lat += caserne.lat;
+        L.marker([caserne.lat, caserne.lon], {
             icon: Icon_Caserne2
         }).addTo(CASERNES).bindPopup(description);
     } else {
-        markers += L.marker([caserne.lat, caserne.lon], {
+        L.marker([caserne.lat, caserne.lon], {
             icon: Icon_Caserne
         }).addTo(CASERNES).bindPopup(description);
     }
@@ -174,7 +168,7 @@ function ajout_feu_map(feu) {
     var distance = Math.round(latlng1.distanceTo(latlng2) / 1000);
 
     var description = "<h2>FIRE N*" + feu.id + "</h2>  <h3>Fire Type:" + feu.type + " </h3>  <h3>Intensity: " + feu.intensity + "</h3>  <h3>Range: " + feu.range + " </h3>  <h3>Distance à la caserne : " + distance + " km";
-    markers += L.marker([feu.lat, feu.lon], {
+    L.marker([feu.lat, feu.lon], {
         icon: Icon_Feu
     }).addTo(FEUX).bindPopup(description);
 
@@ -185,6 +179,61 @@ function ajout_feu_map(feu) {
 
 //-------------------------------------------------------------------------------AJOUT VEHICULE-------------------------------------------------
 let VehiculeList = []
+
+async function send() 
+{
+    json_obj=JSON.stringify({
+        crewMember: Number(document.getElementById("CrewMember").value),
+        fuel: Number(document.getElementById("fuel").value),
+        lon: parseFloat(document.getElementById("lon").value),
+        lat: parseFloat(document.getElementById("lat").value),
+        type : document.getElementById("Type").value,
+        facilityRefID : Number(id_groupe) ,
+        liquidQuantity: Number(document.getElementById("liquidQuantity").value)});
+
+
+
+    const rawResponse = await fetch("http://localhost:8080/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body: json_obj
+    });
+
+
+
+    generate_vehicle();
+
+    
+
+    
+    
+}
+
+function generate_vehicle() {
+
+    const GET_CHUCK_URL="http://localhost:8080/vehicle";
+    let context =   {
+                        method: 'GET'
+                    };
+        
+    fetch(GET_CHUCK_URL,context)
+        .then(response3 => response3.json())
+            .then(response3 => callback3(response3));
+}
+
+function callback3(response3){
+    for (vehicle of response3) {
+
+        if (!VehiculeList.includes(vehicle)){
+        ajout_vehicle_map(vehicle);
+        VehiculeList.push(vehicle);
+        }
+    }
+}
+
 
 var Icon_Camion_Autre_Equipe = L.icon({
     iconUrl: 'voiture2.png',
@@ -202,128 +251,23 @@ var Icon_Camion2 = L.icon({
 });
 
 
-async function send() 
-{
-    json_obj=JSON.stringify({
-        crewMember: Number(document.getElementById("CrewMember").value),
-        fuel: Number(document.getElementById("fuel").value),
-        lon: parseFloat(document.getElementById("lon").value),
-        lat: parseFloat(document.getElementById("lat").value),
-        type : document.getElementById("Type").value,
-        facilityRefID : Number(id_groupe) ,
-        liquidQuantity: Number(document.getElementById("liquidQuantity").value)});
-
-
-
-    const rawResponse = await fetch("http://vps.cpe-sn.fr:8081/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        body: json_obj
-    });
-
-
-
-    generate_vehicle_new(parseFloat(document.getElementById("lon").value),parseFloat(document.getElementById("lat").value));
-
-    
-
-    
-    
-}
-
-function generate_vehicle_new(lon, lat) {
-
-    const GET_CHUCK_URL="http://vps.cpe-sn.fr:8081/vehicle"; 
-    let context =   {
-                        method: 'GET'
-                    };
-        
-    fetch(GET_CHUCK_URL,context)
-        .then(response4 => response4.json())
-        .then(response4 => callback4(response4,lon,lat))
-        .catch(error => err_callback(error));
-}
-
-function callback4(response4,lon,lat){
-    for (vehicle of response4) {
-
-        if (vehicle.lon==lon && vehicle.lat==lat){
-
-            if(vehicle.fuel <= document.getElementById("fuel2").value && vehicle.crewMember <= document.getElementById("crewMember").value){
-                ajout_vehicle_map_new(vehicle);
-                VehiculeList.push(vehicle);
-            }
-            
-        }
-    }
-}
-
-function ajout_vehicle_map_new(vehicle) {
-    var description = "<h2>VEHICULE N*" + vehicle.id + "</h2>  <h3>crewMember:" + vehicle.crewMember + " </h3>  <h3>LiquidType: " + vehicle.liquidType + "</h3>  <h3>fuel: " + vehicle.fuel + " </h3>  <h3>Type : " + vehicle.type ;
-        if(vehicle.type=="CAR"){
-            markers += L.marker([vehicle.lat, vehicle.lon], {
-                icon: Icon_Camion
-            }).addTo(CAMIONS).bindPopup(description);
-        }
-        else{
-            markers += L.marker([vehicle.lat, vehicle.lon], {
-                icon: Icon_Camion2
-            }).addTo(CAMIONS).bindPopup(description);
-        }
-}
-
-
-function generate_vehicle() {
-
-    const GET_CHUCK_URL="http://vps.cpe-sn.fr:8081/vehicle"; 
-    let context =   {
-                        method: 'GET'
-                    };
-        
-    fetch(GET_CHUCK_URL,context)
-        .then(response3 => response3.json())
-        .then(response3 => callback3(response3))
-        .catch(error => err_callback(error));
-}
-
-function callback3(response3){
-    for (vehicle of response3) {
-
-        if( vehicle.fuel <= document.getElementById("fuel2").value && vehicle.crewMember <= document.getElementById("crewMember2").value){
-
-        ajout_vehicle_map(vehicle);
-        VehiculeList.push(vehicle);
-            }
-    }
-
-}
-
-
-
-
-
-
-
 function ajout_vehicle_map(vehicle) {
     var description = "<h2>VEHICULE N*" + vehicle.id + "</h2>  <h3>crewMember:" + vehicle.crewMember + " </h3>  <h3>LiquidType: " + vehicle.liquidType + "</h3>  <h3>fuel: " + vehicle.fuel + " </h3>  <h3>Type : " + vehicle.type ;
     if (vehicle.facilityRefID===id_groupe){
-        if(vehicle.type=="CAR"){
-            markers += L.marker([vehicle.lat, vehicle.lon], {
+        if(vehicle.type==="CAR"){
+            L.marker([vehicle.lat, vehicle.lon], {
                 icon: Icon_Camion
             }).addTo(CAMIONS).bindPopup(description);
         }
         else{
-            markers += L.marker([vehicle.lat, vehicle.lon], {
+            L.marker([vehicle.lat, vehicle.lon], {
                 icon: Icon_Camion2
             }).addTo(CAMIONS).bindPopup(description);
         }
         
     }
     else{
-        markers += L.marker([vehicle.lat, vehicle.lon], {
+        L.marker([vehicle.lat, vehicle.lon], {
             icon: Icon_Camion_Autre_Equipe
         }).addTo(CAMIONS).bindPopup(description);
     }
@@ -353,34 +297,11 @@ legend.onAdd = function(mymap) {
 legend.addTo(mymap);
 //-----------------------------------------------------------------------QUAND LE DOCUMENT EST FINI------------------------------
 
-function layerRemoveMarkers() {
-    sleep(2000);
-    CASERNES.clearLayers();
-    FEUX.clearLayers();
-    CAMIONS.clearLayers();
-
-}
-
-function sleep(ms) {
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
-    );}
-
-
 $(document).ready(function() {
 
-    function main(){
-        generate_caserne();
-        generate_vehicle();
-        setTimeout(main,50000);
-        
-        layerRemoveMarkers();
-    }
 
-    main();
-
-
-    
+    generate_caserne();
+    generate_vehicle();
 
 });
 

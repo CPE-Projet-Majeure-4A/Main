@@ -3,6 +3,8 @@ package com.majeur.projet.movement;
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
 import com.majeur.projet.apiCommunication.StaticGet;
+import com.majeur.projet.apiCommunication.VehicleObject;
+import com.majeur.projet.emergencyManager.EmergencyManagerFunctions;
 import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.VehicleState;
 
@@ -59,9 +61,15 @@ public class MoveFunctions {
         return destCoords;
     }
 
-    public static double[] getDestination_Linear(MissionEntity mission, double[] destCoords){
-        //TODO
-        return null;
+    public static double[] getDestination_Linear(VehicleObject vehicle, MissionEntity mission, double[] destCoords){
+
+        double step = mission.getStep();
+        double dirCoeff = (vehicle.getLat()-destCoords[0])/(vehicle.getLon()-destCoords[1]);
+        double stepX = step/Math.sqrt(1+dirCoeff);
+        double stepY = dirCoeff*stepX;
+        double newX = stepX + vehicle.getLon();
+        double newY = stepY+vehicle.getLat();
+        return new double[]{Math.round(100.0d*newX)/100.0d, Math.round(100.0d*newY)/100.0d};
     }
 
     public static boolean isVehicleAtDestination(double[] destCoords, double[] vehicleCoords, double step){

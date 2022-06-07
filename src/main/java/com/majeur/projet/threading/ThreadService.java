@@ -79,7 +79,7 @@ public class ThreadService {
         int facilityId = StaticGet.getTeamFacility().getId();
         for(VehicleObject vehicle : vehicles){
             if(vehicle.getFacilityRefID() == facilityId){
-                MissionEntity mission = new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY);
+                MissionEntity mission = new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY, 0.1);
                 //Initialisation des missions
                 missions.add(mission);
             }

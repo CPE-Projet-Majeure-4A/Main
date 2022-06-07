@@ -17,10 +17,11 @@ public class MissionEntity {
     @ManyToOne
     private ThreadEntity threadEntity;
 
-    public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState) {
+    public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState, double step) {
         this.vehicleId = vehicleId;
         this.destinationId = destinationId;
         this.vehicleState = vehicleState;
+        this.step = step;
     }
 
     public MissionEntity() {

@@ -53,7 +53,9 @@ public class EmergencyManagerRunnable implements Runnable {
 	                                MissionEntity newMission =
 	                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
 	                                // Calculer pas (step) et ajouter à mission
-	                                mission.setDestinationId(newMission.getDestinationId());
+                                    double step = EmergencyManagerFunctions.ComputeStep(vehicle, newMission.getDestinationId(), facility, newMission.getVehicleState());
+                                    mission.setStep(step);
+                                    mission.setDestinationId(newMission.getDestinationId());
 	                                mission.setVehicleState(newMission.getVehicleState());
 	                            }
                         	}

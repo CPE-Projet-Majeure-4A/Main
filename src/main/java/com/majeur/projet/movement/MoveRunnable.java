@@ -60,8 +60,8 @@ public class MoveRunnable implements Runnable{
 
                             double[] destCoords = MoveFunctions.getDestinationCoords(mission, facility, fireMap);
 
-                            double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
-                            //double[] coords = MoveFunctions.getDestination_Linear(mission, destCoords);
+                            //double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
+                            double[] coords = MoveFunctions.getDestination_Linear(vehicle, mission, destCoords);
                             //System.out.println("Old coords: " + vehicle.getLat() +";"+ vehicle.getLon() + " New coords: " +coords[0] +";"+coords[1]);
                             vehicle.setLat(coords[0]);
                             vehicle.setLon(coords[1]);
@@ -79,7 +79,6 @@ public class MoveRunnable implements Runnable{
                         h.setMissions(missions);
                         hrepo.save(h);
                     }
-
 
                 }
 

@@ -23,16 +23,16 @@
     <div id="ajouts_vehicules">
 
         
-            <form action="/static">
+            <form action="/">
                 <div class="title">
                     <i class="fas fa-pencil-alt"></i>
                     <h2>Nouveau véhicule</h2>
                 </div>
                 <select id="Type">
                     <option value="CAR" selected >CAR</option>
-                    <option value="FIRE-ENGIN" >FIRE-ENGIN</option>
+                    <option value="FIRE_ENGINE" >FIRE-ENGINE</option>
                     <option value="PUMPER_TRUCK" >PUMPER_TRUCK</option>
-                    <option value="WATER_TENDER" >WATER_TENDER</option>
+                    <option value="WATER_TENDERS" >WATER_TENDERS</option>
                     <option value="TURNTABLE_LADDER_TRUCK" >TURNTABLE_LADDER_TRUCK</option>
                     <option value="TRUCK" >TRUCK</option>
                   </select>
@@ -56,7 +56,7 @@
             
 
     
-            <form action="/static">
+            <form action="/">
                 <div class="title">
                     <i class="fas fa-pencil-alt"></i>
                     <h2>Supprimer un véhicule</h2>
@@ -74,21 +74,67 @@
 
             <form>
                 <fieldset>
-                    <legend>Couches</legend>
+                    <legend>Filtres Feux</legend>
                     <div>
-                        <input type="checkbox" id="pizzeria" name="interest" value="pizzeria" >
-                        <label for="pizzeria">Afficher seulement les feux à moins de 5 km de la caserne </label>
+                        <input type="checkbox" id="A" name="interest" checked value="A" >
+                        <label for="A">A </label>
                     </div>
                     <div>
-                        <input type="checkbox" id="sport" name="interest" value="sport" checked>
-                        <label for="sport">Casernes</label>
+                        <input type="checkbox" id="B_Gasoline" name="interest" checked value="B_Gasoline" >
+                        <label for="B_Gasoline">B_Gasoline</label>
                     </div>
                     <div>
-                        <input type="checkbox" id="sport" name="interest" value="sport" checked>
-                        <label for="sport">Casernes</label>
+                        <input type="checkbox" id="B_Alcohol" name="interest" checked value="B_Alcohol" >
+                        <label for="B_Alcohol">B_Alcohol</label>
                     </div>
+                    <div>
+                        <input type="checkbox" id="B_Plastics" name="interest" checked value="B_Plastics" >
+                        <label for="B_Plastics">B_Plastics</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="C_Flammable_Gases" name="interest" checked value="C_Flammable_Gases" >
+                        <label for="C_Flammable_Gases">C_Flammable_Gases</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="D_Metals" name="interest" checked value="D_Metals" >
+                        <label for="D_Metals">D_Metals</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="E_Electric" name="interest" checked value="E_Electric" >
+                        <label for="E_Electric">E_Electric</label>
+                    </div>
+
+
+
+
+                     <div>
+				        <input type="range" step="10" id="Intensity" name="Intensity" min=0 max=100 value=100>
+				        <label for="Intensity">Intensité</label>
+				      </div>
+				
+				      <div>
+				        <input type="range" step="10" id="Range" name="Range" min=0 max=100 value=100>
+				        <label for="Range">Etendue</label>
+				      </div>
                 </fieldset>
             </form>
+
+            <form>
+                <fieldset>
+                    <legend>Filtres Vehicules</legend>
+                     <div>
+				        <input type="range" min ="0" max ="500"  step="10" id="fuel2" name="fuel" >
+				        <label for="fuel2">fuel</label>
+				      </div>
+				
+				      <div>
+				        <input type="range" min ="0" max ="10"  step="1" id="crewMember2" name="crewMember"  >
+				        <label for="crewMember2">crewMember</label>
+				      </div>
+                </fieldset>
+            </form>
+
+            
 
     </div>
 
