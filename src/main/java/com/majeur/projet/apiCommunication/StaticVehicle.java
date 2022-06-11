@@ -73,7 +73,7 @@ public class StaticVehicle {
         HttpEntity<String> request =
                 new HttpEntity<>(jsonObject.toString(), headers);
 
-        System.out.println("POST: " + request);
+        //System.out.println("POST: " + request);
         return restTemplate.postForObject(url+"/"+teamUuid, request, VehicleObject.class);
     }
 }

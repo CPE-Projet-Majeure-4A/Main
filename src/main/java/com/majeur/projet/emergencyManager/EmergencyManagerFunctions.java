@@ -131,20 +131,21 @@ public class EmergencyManagerFunctions {
 		return fireId;
 	}
 	public static double ComputeStep(VehicleObject vehicle, int fireId, FacilityObject facility, VehicleState state) {
-
-		double step = 0;
+		// Step = number of steps left to reach destination
+		double steps = 5;
+		/*
 		if(state.equals(VehicleState.GOING_TO_FACILITY)) {
 			double distance = Math.sqrt(Math.pow(facility.getLon()-vehicle.getLon(), 2)+Math.pow(facility.getLat()-vehicle.getLat(), 2));
 			int wayPoint = (int) Math.max(Math.round(distance/2), 5);
-			step = distance / wayPoint;
+			steps = distance / wayPoint;
 		}
 		else if(state.equals(VehicleState.GOING_TO_FIRE)) {
 			FireObject fire = StaticGet.getFire(Integer.toString(fireId));
 			double distance = Math.sqrt(Math.pow(fire.getLon()-vehicle.getLon(), 2)+Math.pow(fire.getLat()-vehicle.getLat(), 2));
 			int wayPoint = (int) Math.max(Math.round(distance/2), 5);
-			step = distance / wayPoint;
+			steps = distance / wayPoint;
 		}
-		return step;
-
+		*/
+		return steps;
 	}
 }

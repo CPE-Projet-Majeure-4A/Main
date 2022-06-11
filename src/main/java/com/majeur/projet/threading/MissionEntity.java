@@ -12,16 +12,16 @@ public class MissionEntity {
     private int destinationId;
     private VehicleState vehicleState;
 
-    private double step;
+    private double steps;
 
     @ManyToOne
     private ThreadEntity threadEntity;
 
-    public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState, double step) {
+    public MissionEntity(int vehicleId, int destinationId, VehicleState vehicleState, double steps) {
         this.vehicleId = vehicleId;
         this.destinationId = destinationId;
         this.vehicleState = vehicleState;
-        this.step = step;
+        this.steps = steps;
     }
 
     public MissionEntity() {
@@ -76,11 +76,11 @@ public class MissionEntity {
         this.missionId = missionId;
     }
 
-    public double getStep() {
-        return step;
+    public double getSteps() {
+        return steps;
     }
 
-    public void setStep(double step) {
-        this.step = step;
+    public void setSteps(double step) {
+        this.steps = step;
     }
 }

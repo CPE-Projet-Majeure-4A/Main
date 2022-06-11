@@ -40,13 +40,12 @@ public class ResourceManagerRunnable implements Runnable{
                         for(MissionEntity mission : missions) {
                             VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE)){
+                                ResourceManagerFunctions.decreaseLiquid(vehicle);
+                            }else if(mission.getVehicleState().equals(VehicleState.AT_FACILITY)) {
                                 ResourceManagerFunctions.increaseFuel(vehicle);
                                 ResourceManagerFunctions.increaseLiquid(vehicle);
-                            }else if(mission.getVehicleState().equals(VehicleState.AT_FACILITY)){
-                                ResourceManagerFunctions.decreaseFuel(vehicle);
-                                ResourceManagerFunctions.decreaseLiquid(vehicle);
                             }else{
-                                continue;
+                                ResourceManagerFunctions.decreaseFuel(vehicle);
                             }
                             StaticVehicle.addVehicle(vehicle);
 

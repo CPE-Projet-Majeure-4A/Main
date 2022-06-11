@@ -50,18 +50,21 @@ public class EmergencyManagerRunnable implements Runnable {
                         	if(vehicle.getLiquidQuantity() != 0) {
 	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
 	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
+                                    //System.out.println("Looking for mission");
 	                                MissionEntity newMission =
 	                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
-	                                // Calculer pas (step) et ajouter à mission
-                                    double step = EmergencyManagerFunctions.ComputeStep(vehicle, newMission.getDestinationId(), facility, newMission.getVehicleState());
-                                    mission.setStep(step);
+	                                // Calculer pas (steps) et ajouter à mission
+                                    double steps = EmergencyManagerFunctions.ComputeStep(vehicle, newMission.getDestinationId(), facility, newMission.getVehicleState());
+                                    mission.setSteps(steps);
                                     mission.setDestinationId(newMission.getDestinationId());
 	                                mission.setVehicleState(newMission.getVehicleState());
 	                            }
-                        	}
+                        	}else{
+                                System.out.println("No liquid");
+                            }
 
                         }
-                        //System.out.println(missions.toString());
+                        System.out.println(missions.toString());
                         h.setMissions(missions);
                         hrepo.save(h);
                     }

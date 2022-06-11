@@ -32,8 +32,6 @@ public class VehicleCrt {
 
     @RequestMapping(method = RequestMethod.POST, value = "/vehicle/{teamUuid}")
     public VehicleObject vehicleCrtPost(@PathVariable String teamUuid, @RequestBody VehicleObject body) {
-        VehicleObject vehicle = StaticVehicle.addVehicle(body);
-        // TODO: Peut être null si erreur dans la requête (à gérer)
-        return vehicle;
+        return StaticVehicle.addVehicle(body);
     }
 }

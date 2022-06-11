@@ -49,6 +49,7 @@ public class MoveRunnable implements Runnable{
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
                                     if (!MoveFunctions.doesFireExist(mission, fireMap) || (vehicle.getLiquidQuantity() <= 1)){
+                                        System.out.println("abort mission");
                                         mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
                                         continue;
                                     }
@@ -62,18 +63,20 @@ public class MoveRunnable implements Runnable{
 
                             //double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
                             double[] coords = MoveFunctions.getDestination_Linear(vehicle, mission, destCoords);
-                            //System.out.println("Old coords: " + vehicle.getLat() +";"+ vehicle.getLon() + " New coords: " +coords[0] +";"+coords[1]);
+                            System.out.println("Old coords: " + vehicle.getLat() +" ; " + vehicle.getLon() + " New: " + coords[0] + " ; " + coords[1]);
+                            System.out.println("Delta Lat: " + (vehicle.getLat()-coords[0]) +"; Delta Lon:"+ (vehicle.getLon()-coords[1]));
+
                             vehicle.setLat(coords[0]);
                             vehicle.setLon(coords[1]);
                             //StaticVehicle.updateVehicle(Integer.toString(vehicle.getId()), vehicle);
                             StaticVehicle.addVehicle(vehicle);
 
-                            if(MoveFunctions.isVehicleAtDestination(destCoords, coords, mission.getStep())){
+                            if(MoveFunctions.isVehicleAtDestination(destCoords, coords, mission.getSteps())){
                                 mission.setVehicleState(MoveFunctions.setVehicleAtDestination(mission.getVehicleState()));
+                                System.out.println("Arrivé à dest");
                             }
 
-                            StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
-                            //System.out.println("Updated coords: " + vehicle.getLat() +";"+ vehicle.getLon());
+                            // ?? StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
 
                         }
                         h.setMissions(missions);

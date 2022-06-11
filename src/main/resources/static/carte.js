@@ -372,7 +372,7 @@ $(document).ready(function() {
     function main(){
         generate_caserne();
         generate_vehicle();
-        setTimeout(main,50000);
+        setTimeout(main,5000);
         
         layerRemoveMarkers();
     }
