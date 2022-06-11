@@ -3,13 +3,12 @@ package com.majeur.projet.emergencyManager;
 
 import com.majeur.projet.apiCommunication.FacilityObject;
 import com.majeur.projet.apiCommunication.FireObject;
-import com.majeur.projet.apiCommunication.StaticGet;
 import com.majeur.projet.apiCommunication.VehicleObject;
 import com.majeur.projet.threading.MissionEntity;
 import com.majeur.projet.threading.VehicleState;
 
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**

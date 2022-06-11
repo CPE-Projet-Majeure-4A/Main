@@ -28,7 +28,6 @@ public class ThreadService {
     public ThreadService(ThreadRepository threadRepository) {
         //Replace the @Autowire annotation....
         this.threadRepository = threadRepository;
-        //TODO Prendre en charge génération de 2 threads différents à partir de Movement et EmergencyManager
         //Create a Runnable is charge of executing cyclic actions
         this.emergencyManagerRunnable =new EmergencyManagerRunnable(this.threadRepository);
         this.moveRunnable =new MoveRunnable(this.threadRepository);
@@ -79,7 +78,7 @@ public class ThreadService {
         int facilityId = StaticGet.getTeamFacility().getId();
         for(VehicleObject vehicle : vehicles){
             if(vehicle.getFacilityRefID() == facilityId){
-                MissionEntity mission = new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY, 0.1);
+                MissionEntity mission = new MissionEntity(vehicle.getId(), facilityId, VehicleState.GOING_TO_FACILITY, 5);
                 //Initialisation des missions
                 missions.add(mission);
             }

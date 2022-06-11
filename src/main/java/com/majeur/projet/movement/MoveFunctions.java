@@ -44,7 +44,7 @@ public class MoveFunctions {
 
         double step = mission.getSteps();
         mission.setSteps(step - 1);
-        if(step>0){
+        if(step>1){
             double vectLat = vehicle.getLat()-destCoords[0];
             double vectLon = vehicle.getLon()-destCoords[1];
             double newVehicleLat = vehicle.getLat()+(vectLat/step);
@@ -63,7 +63,7 @@ public class MoveFunctions {
          */
     }
 
-    public static boolean isVehicleAtDestination(double[] destCoords, double[] vehicleCoords, double step){
+    public static boolean isVehicleAtDestination(double[] destCoords, double[] vehicleCoords){
         double distance = Math.sqrt(Math.pow(destCoords[0]-vehicleCoords[0],2)+Math.pow(destCoords[1]-vehicleCoords[1],2));
         return distance < 0.0001;
     }

@@ -48,9 +48,12 @@ public class MoveRunnable implements Runnable{
                             // On vérifie si le feu existe toujours
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
-                                    if (!MoveFunctions.doesFireExist(mission, fireMap) || (vehicle.getLiquidQuantity() <= 1)){
+                                    if (!MoveFunctions.doesFireExist(mission, fireMap) || (vehicle.getLiquidQuantity() <= 5)){
                                         System.out.println("abort mission");
                                         mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
+                                        mission.setDestinationId(facility.getId());
+                                        //TODO Code à déplacer
+                                        mission.setSteps(5);
                                         continue;
                                     }
                             }
@@ -65,13 +68,14 @@ public class MoveRunnable implements Runnable{
                             double[] coords = MoveFunctions.getDestination_Linear(vehicle, mission, destCoords);
                             System.out.println("Old coords: " + vehicle.getLat() +" ; " + vehicle.getLon() + " New: " + coords[0] + " ; " + coords[1]);
                             System.out.println("Delta Lat: " + (vehicle.getLat()-coords[0]) +"; Delta Lon:"+ (vehicle.getLon()-coords[1]));
+                            System.out.println("");
 
                             vehicle.setLat(coords[0]);
                             vehicle.setLon(coords[1]);
                             //StaticVehicle.updateVehicle(Integer.toString(vehicle.getId()), vehicle);
                             StaticVehicle.addVehicle(vehicle);
 
-                            if(MoveFunctions.isVehicleAtDestination(destCoords, coords, mission.getSteps())){
+                            if(MoveFunctions.isVehicleAtDestination(destCoords, coords)){
                                 mission.setVehicleState(MoveFunctions.setVehicleAtDestination(mission.getVehicleState()));
                                 System.out.println("Arrivé à dest");
                             }

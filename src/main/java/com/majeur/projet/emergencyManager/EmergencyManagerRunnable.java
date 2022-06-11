@@ -47,7 +47,7 @@ public class EmergencyManagerRunnable implements Runnable {
 
                         for(MissionEntity mission : missions){
                             VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
-                        	if(vehicle.getLiquidQuantity() != 0) {
+                        	if(vehicle.getLiquidQuantity() > 5) {
 	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
 	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
                                     //System.out.println("Looking for mission");
@@ -68,15 +68,12 @@ public class EmergencyManagerRunnable implements Runnable {
                         h.setMissions(missions);
                         hrepo.save(h);
                     }
-
-
                 }
                 System.out.println("Thread affect loop");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
         System.out.println("Runnable DisplayRunnable ends.... ");
     }
 

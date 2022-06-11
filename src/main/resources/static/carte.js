@@ -4,6 +4,8 @@ const id_groupe=662859;
 var markers = [];
 var a=0;
 
+const URI = "http://vps.cpe-sn.fr:8081";
+//const URI = "http://localhost:8080";
 
 const mapboxToken = "pk.eyJ1IjoiYXJ0aHVyb2xpdmllciIsImEiOiJjbDN2YTYxZW0wMzdiM21wOGE3eGxyZjNkIn0.TEuLBTV8qSpy8i9zveoxGg";
 
@@ -60,7 +62,7 @@ lgMarkers = new L.LayerGroup();
 // ------------------------------------------------------Recu-peration des feux pour l'affichage 
 function generate_feu() {
 
-    const URL = "http://localhost:8080/fire";
+    const URL = URI + "/fire";
     let context = {
         method: 'GET'
     };
@@ -91,7 +93,7 @@ function callback(response) {
 // ------------------------------------------------------Recu-peration des caserne pour l'affichage 
 function generate_caserne() {
 
-    const URL = "http://localhost:8080/facility";
+    const URL = URI + "/facility";
     let context = {
         method: 'GET'
     };
@@ -215,7 +217,7 @@ async function send()
 
 
 
-    const rawResponse = await fetch("http://localhost:8080/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
+    const rawResponse = await fetch(URI + "/vehicle/a1cc702e-de17-4796-8886-0b937c406ad1", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -236,7 +238,7 @@ async function send()
 
 function generate_vehicle_new(lon, lat) {
 
-    const GET_CHUCK_URL="http://localhost:8080/vehicle";
+    const GET_CHUCK_URL= URI + "/vehicle";
     let context =   {
                         method: 'GET'
                     };
@@ -278,7 +280,7 @@ function ajout_vehicle_map_new(vehicle) {
 
 function generate_vehicle() {
 
-    const GET_CHUCK_URL="http://localhost:8080/vehicle";
+    const GET_CHUCK_URL= URI + "/vehicle";
     let context =   {
                         method: 'GET'
                     };

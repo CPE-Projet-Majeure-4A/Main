@@ -19,8 +19,8 @@ public class StaticVehicle {
 
     public static void updateVehicle(VehicleObject vehicle){
         String vehicleId = Integer.toString(vehicle.getId());
-        //PUT peut ne pas fonctionner à cause d'un bug de l'API
-        // Si problème utiliser POST en précisant l'id dans body
+        //PUT  ne fonctionne pas à cause d'un bug du côté de l'API
+        // => utiliser POST en précisant l'id dans body
         RestTemplate restTemplate = new RestTemplate();
 
         JSONObject jsonObject = new JSONObject();
