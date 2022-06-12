@@ -12,10 +12,10 @@ import org.springframework.web.client.RestTemplate;
  * Sends UPDATE, PUT and DELETE requests to Vehicle API
  */
 public class StaticVehicle {
-    static final private String url = "http://vps.cpe-sn.fr:8081/vehicle";
+    private static final String url = "http://vps.cpe-sn.fr:8081/vehicle";
 
     //@Value("com.majeur.projet.teamUuid")
-    private static String teamUuid = "a1cc702e-de17-4796-8886-0b937c406ad1";
+    private static final String teamUuid = "a1cc702e-de17-4796-8886-0b937c406ad1";
 
     public static void updateVehicle(VehicleObject vehicle){
         String vehicleId = Integer.toString(vehicle.getId());

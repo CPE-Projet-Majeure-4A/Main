@@ -57,7 +57,7 @@ public class ResourceManagerRunnable implements Runnable{
 
                 }
 
-                System.out.println("Thread resource loop");
+                System.out.println("Thread resource loop done");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

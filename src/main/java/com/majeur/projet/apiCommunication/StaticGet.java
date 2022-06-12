@@ -11,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
  */
 public class StaticGet {
 
-    //@Value("com.majeur.projet.teamUuid")
-    private static String teamUuid = "a1cc702e-de17-4796-8886-0b937c406ad1";
-
-    private static String facilityId = "662859";
+    private static final String facilityId = "664996";
 
     public static FireObject[] getFires()
     {

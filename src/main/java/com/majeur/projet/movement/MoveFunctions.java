@@ -36,10 +36,12 @@ public class MoveFunctions {
                 mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE);
     }
 
+    // Méthode de déplacement 1: le véhicule est téléporté à sa destination
     public static double[] getDestination_Teleportation(double[] destCoords){
         return destCoords;
     }
 
+    // Méthode de déplacement 2: le véhicule atteint sa destination après plusieurs déplacements en ligne droite
     public static double[] getDestination_Linear(VehicleObject vehicle, MissionEntity mission, double[] destCoords){
 
         double step = mission.getSteps();
@@ -47,20 +49,12 @@ public class MoveFunctions {
         if(step>1){
             double vectLat = vehicle.getLat()-destCoords[0];
             double vectLon = vehicle.getLon()-destCoords[1];
-            double newVehicleLat = vehicle.getLat()+(vectLat/step);
-            double newVehicleLon = vehicle.getLon()+(vectLon/step);
+            double newVehicleLat = vehicle.getLat()-(vectLat/step);
+            double newVehicleLon = vehicle.getLon()-(vectLon/step);
             return new double[]{newVehicleLat, newVehicleLon};
         }else{
             return destCoords;
         }
-        /*
-        double dirCoeff = (vehicle.getLat()-destCoords[0])/(vehicle.getLon()-destCoords[1]);
-        double stepX = step/Math.sqrt(1+dirCoeff);
-        double stepY = dirCoeff*stepX;
-        double newX = stepX + vehicle.getLon();
-        double newY = stepY+vehicle.getLat();
-        return new double[]{Math.round(100.0d*newX)/100.0d, Math.round(100.0d*newY)/100.0d};
-         */
     }
 
     public static boolean isVehicleAtDestination(double[] destCoords, double[] vehicleCoords){

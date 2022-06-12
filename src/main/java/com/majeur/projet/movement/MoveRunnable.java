@@ -49,10 +49,9 @@ public class MoveRunnable implements Runnable{
                             if(mission.getVehicleState().equals(VehicleState.AT_FIRE) ||
                                     mission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
                                     if (!MoveFunctions.doesFireExist(mission, fireMap) || (vehicle.getLiquidQuantity() <= 5)){
-                                        System.out.println("abort mission");
+                                        System.out.println("Vehicle " + vehicle.getId() +": Abort mission No Fire/Liquid");
                                         mission.setVehicleState(VehicleState.GOING_TO_FACILITY);
                                         mission.setDestinationId(facility.getId());
-                                        //TODO Code à déplacer
                                         mission.setSteps(5);
                                         continue;
                                     }
@@ -62,25 +61,26 @@ public class MoveRunnable implements Runnable{
                                 continue;
                             }
 
+                            // destination coords
                             double[] destCoords = MoveFunctions.getDestinationCoords(mission, facility, fireMap);
 
-                            //double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
+                            // coords to move vehicle to
+                            // double[] coords = MoveFunctions.getDestination_Teleportation(destCoords);
                             double[] coords = MoveFunctions.getDestination_Linear(vehicle, mission, destCoords);
-                            System.out.println("Old coords: " + vehicle.getLat() +" ; " + vehicle.getLon() + " New: " + coords[0] + " ; " + coords[1]);
-                            System.out.println("Delta Lat: " + (vehicle.getLat()-coords[0]) +"; Delta Lon:"+ (vehicle.getLon()-coords[1]));
-                            System.out.println("");
+
+                            System.out.println("Vehicle " + vehicle.getId() + ": Old coords: " + vehicle.getLat() +", " + vehicle.getLon() + " New: " + coords[0] + ", " + coords[1]);
 
                             vehicle.setLat(coords[0]);
                             vehicle.setLon(coords[1]);
-                            //StaticVehicle.updateVehicle(Integer.toString(vehicle.getId()), vehicle);
+
+                            // send update to API
                             StaticVehicle.addVehicle(vehicle);
 
                             if(MoveFunctions.isVehicleAtDestination(destCoords, coords)){
                                 mission.setVehicleState(MoveFunctions.setVehicleAtDestination(mission.getVehicleState()));
-                                System.out.println("Arrivé à dest");
+                                System.out.println("Vehicle " + vehicle.getId() + ": Reached destination");
                             }
 
-                            // ?? StaticGet.getVehicleById(String.valueOf(mission.getVehicleId()));
 
                         }
                         h.setMissions(missions);
@@ -89,7 +89,7 @@ public class MoveRunnable implements Runnable{
 
                 }
 
-                System.out.println("Thread move loop");
+                System.out.println("Thread move loop done");
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

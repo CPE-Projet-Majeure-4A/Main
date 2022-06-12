@@ -1,11 +1,11 @@
 //---------------------------------INITIALISATION DE LA MAP -----------------------------------------------------------------
 
-const id_groupe=662859;
+const id_groupe=664996;
 var markers = [];
 var a=0;
 
-const URI = "http://vps.cpe-sn.fr:8081";
-//const URI = "http://localhost:8080";
+//const URI = "http://vps.cpe-sn.fr:8081";
+const URI = "http://localhost:8080";
 
 const mapboxToken = "pk.eyJ1IjoiYXJ0aHVyb2xpdmllciIsImEiOiJjbDN2YTYxZW0wMzdiM21wOGE3eGxyZjNkIn0.TEuLBTV8qSpy8i9zveoxGg";
 
@@ -165,7 +165,7 @@ let FireList = []
 
 var Icon_Feu = L.icon({
     iconUrl: 'fire.png',
-    iconSize: [50, 50]
+    iconSize: [35, 35]
 });
 
 function ajout_feu_map(feu) {
@@ -253,7 +253,10 @@ function callback4(response4,lon,lat){
     for (vehicle of response4) {
 
         if (vehicle.lon===lon && vehicle.lat===lat){
-
+            if((document.getElementById("fuel2") == null) || (document.getElementById("crewMember") == null)){
+                console.error("Element not found");
+                return;
+            }
             if(vehicle.fuel <= document.getElementById("fuel2").value && vehicle.crewMember <= document.getElementById("crewMember").value){
                 ajout_vehicle_map_new(vehicle);
                 VehiculeList.push(vehicle);

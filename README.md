@@ -1,7 +1,4 @@
-# Notes architecture backend  
+# Instructions
 
-- Nécessité de multiprocessing
-  - Un process passerelle
-  - Un process update
-  - Un process gestion déplacement en cours (plus tard)
-- Organiser
+- Compiler et lancer l'application (Java 11)
+- Carte accessible à `localhost:8080`

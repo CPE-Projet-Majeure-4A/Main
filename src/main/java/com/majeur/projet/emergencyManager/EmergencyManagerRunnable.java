@@ -9,9 +9,7 @@ import com.majeur.projet.threading.ThreadEntity;
 import com.majeur.projet.threading.ThreadRepository;
 import com.majeur.projet.threading.VehicleState;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,34 +32,40 @@ public class EmergencyManagerRunnable implements Runnable {
                     synchronized(hrepo){
 
                         List<MissionEntity> missions = h.getMissions();
-                        //System.out.println("EM: "+missions);
 
                         FacilityObject facility = StaticGet.getTeamFacility();
                         List<FireObject> listFires = Arrays.asList(StaticGet.getFires());
 
-                        List<FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(listFires, facility);
+                        Map<Integer, FireObject> firesInArea = EmergencyManagerFunctions.GetFireInArea(listFires, facility);
 
                         List<VehicleObject> listVehicles = List.of(StaticGet.getVehicles());
                         Map<Integer, VehicleObject> vehicleMap = listVehicles.stream()
                                 .collect(Collectors.toMap(VehicleObject::getId, Function.identity()));
 
+
                         for(MissionEntity mission : missions){
                             VehicleObject vehicle = vehicleMap.get(mission.getVehicleId());
-                        	if(vehicle.getLiquidQuantity() > 5) {
-	                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) ||
-	                                mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
-                                    //System.out.println("Looking for mission");
+
+                            // Sends vehicles only if they are available
+                            if(mission.getVehicleState().equals(VehicleState.AT_FACILITY) || mission.getVehicleState().equals(VehicleState.GOING_TO_FACILITY)){
+
+                                // Sends vehicles only if they have enough fuel & liquid
+                                if((vehicle.getLiquidQuantity() > 5) && (vehicle.getFuel() > 5)) {
 	                                MissionEntity newMission =
 	                                        EmergencyManagerFunctions.SelectVehicle(firesInArea, mission.getVehicleId(), facility.getId(), vehicle);
-	                                // Calculer pas (steps) et ajouter à mission
+                                    if(newMission.getVehicleState().equals(VehicleState.GOING_TO_FIRE)){
+                                        // Avoid sending multiple vehicles to same fire
+                                        firesInArea.remove(newMission.getDestinationId());
+                                    }
+                                    System.out.println("Vehicle " + vehicle.getId() + ": New mission " + newMission.getVehicleState() + " " + newMission.getDestinationId());
                                     double steps = EmergencyManagerFunctions.ComputeStep(vehicle, newMission.getDestinationId(), facility, newMission.getVehicleState());
                                     mission.setSteps(steps);
                                     mission.setDestinationId(newMission.getDestinationId());
 	                                mission.setVehicleState(newMission.getVehicleState());
-	                            }
-                        	}else{
-                                System.out.println("No liquid");
-                            }
+	                            }else{
+                                    System.out.println("Vehicle " + vehicle.getId() + ": Not enough liquid/fuel to leave facility");
+                                }
+                        	}
 
                         }
                         System.out.println(missions.toString());
@@ -69,7 +73,7 @@ public class EmergencyManagerRunnable implements Runnable {
                         hrepo.save(h);
                     }
                 }
-                System.out.println("Thread affect loop");
+                System.out.println("Thread affect loop done");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
